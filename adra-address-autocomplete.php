@@ -60,6 +60,10 @@ add_action(
 add_action(
 	'plugins_loaded',
 	static function () {
-		( new \Adra\AddressAutocomplete\Plugin( \Adra\AddressAutocomplete\Requirements::from_environment() ) )->register();
+		$plugin = new \Adra\AddressAutocomplete\Plugin(
+			\Adra\AddressAutocomplete\Requirements::from_environment(),
+			\Adra\AddressAutocomplete\Settings\Options::from_wordpress()
+		);
+		$plugin->register();
 	}
 );

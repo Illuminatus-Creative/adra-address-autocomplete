@@ -65,12 +65,12 @@
 		}
 	},
 	"expected": {
-		"address1": "Museumstraat 1",
-		"address2": "",
+		"address_1": "Museumstraat 1",
+		"address_2": "",
 		"city": "Amsterdam",
 		"postcode": "1071 XX",
 		"region": "Noord-Holland",
-		"countryCode": "NL",
+		"country": "NL",
 		"wcState": ""
 	}
 }

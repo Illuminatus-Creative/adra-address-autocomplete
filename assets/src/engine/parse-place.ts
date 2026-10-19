@@ -110,8 +110,8 @@ export function parsePlace(place: PlaceData): ParsedPlace {
 		placeId: place.id,
 		formattedAddress: place.formattedAddress,
 		location: place.location,
-		address1: adr['street-address'] ?? '',
-		address2: adr['extended-address'] ?? '',
+		address_1: adr['street-address'] ?? '',
+		address_2: adr['extended-address'] ?? '',
 		// Singapore addresses have no locality in adrFormatAddress.
 		city:
 			adr.locality ||
@@ -120,7 +120,7 @@ export function parsePlace(place: PlaceData): ParsedPlace {
 		postcode: adr['postal-code'] ?? '',
 		region: regionText(adr.region ?? '', candidates, countryCode),
 		regionCandidates: candidates,
-		countryCode,
+		country: countryCode,
 		countryName: country?.longText ?? '',
 	};
 }

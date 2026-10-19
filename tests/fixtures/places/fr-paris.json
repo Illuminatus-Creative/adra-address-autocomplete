@@ -58,12 +58,12 @@
 		}
 	},
 	"expected": {
-		"address1": "Av. Gustave Eiffel",
-		"address2": "",
+		"address_1": "Av. Gustave Eiffel",
+		"address_2": "",
 		"city": "Paris",
 		"postcode": "75007",
 		"region": "Île-de-France",
-		"countryCode": "FR",
+		"country": "FR",
 		"wcState": ""
 	}
 }

@@ -35,15 +35,15 @@ export interface ParsedPlace {
 	placeId: string;
 	formattedAddress: string;
 	location: { lat: number; lng: number } | null;
-	address1: string;
-	address2: string;
+	address_1: string;
+	address_2: string;
 	city: string;
 	postcode: string;
 	/** Region as text, for free-text state/county inputs. */
 	region: string;
 	regionCandidates: RegionCandidate[];
 	/** ISO 3166-1 alpha-2 code, e.g. "US". Empty when Google returned no country. */
-	countryCode: string;
+	country: string;
 	countryName: string;
 }
 

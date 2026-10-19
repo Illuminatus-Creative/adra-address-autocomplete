@@ -86,8 +86,8 @@ export function matchRegion(
 ): string | undefined {
 	const candidates = place.regionCandidates.flatMap((candidate) => [
 		candidate.shortText,
-		place.countryCode && candidate.shortText
-			? `${place.countryCode}-${candidate.shortText}`
+		place.country && candidate.shortText
+			? `${place.country}-${candidate.shortText}`
 			: '',
 		candidate.longText,
 	]);

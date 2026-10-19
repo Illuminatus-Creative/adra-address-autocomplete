@@ -59,12 +59,12 @@
 		}
 	},
 	"expected": {
-		"address1": "Victoria Street West",
-		"address2": "Auckland CBD",
+		"address_1": "Victoria Street West",
+		"address_2": "Auckland CBD",
 		"city": "Auckland",
 		"postcode": "1010",
 		"region": "Auckland",
-		"countryCode": "NZ",
+		"country": "NZ",
 		"wcState": "AUK"
 	}
 }

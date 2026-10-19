@@ -74,12 +74,12 @@
 		}
 	},
 	"expected": {
-		"address1": "C/ de Mallorca, 401",
-		"address2": "L'Eixample",
+		"address_1": "C/ de Mallorca, 401",
+		"address_2": "L'Eixample",
 		"city": "Barcelona",
 		"postcode": "08013",
 		"region": "",
-		"countryCode": "ES",
+		"country": "ES",
 		"wcState": "B"
 	}
 }

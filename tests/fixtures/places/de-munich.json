@@ -65,12 +65,12 @@
 		}
 	},
 	"expected": {
-		"address1": "Marienplatz 1",
-		"address2": "",
+		"address_1": "Marienplatz 1",
+		"address_2": "",
 		"city": "München",
 		"postcode": "80331",
 		"region": "",
-		"countryCode": "DE",
+		"country": "DE",
 		"wcState": "DE-BY"
 	}
 }

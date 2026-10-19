@@ -8,6 +8,9 @@
 namespace Adra\AddressAutocomplete;
 
 use Adra\AddressAutocomplete\Admin\Notices;
+use Adra\AddressAutocomplete\Assets\Google_Loader;
+use Adra\AddressAutocomplete\Settings\Options;
+use Adra\AddressAutocomplete\Settings\Settings_Page;
 
 /**
  * Wires up the parts of the plugin the current site supports.
@@ -18,8 +21,12 @@ final class Plugin {
 	 * Creates the plugin.
 	 *
 	 * @param Requirements $requirements Environment checks.
+	 * @param Options      $options      Plugin settings.
 	 */
-	public function __construct( private Requirements $requirements ) {}
+	public function __construct(
+		private Requirements $requirements,
+		private Options $options,
+	) {}
 
 	/**
 	 * Registers hooks. Called on plugins_loaded.
@@ -28,6 +35,17 @@ final class Plugin {
 		add_action( 'init', array( $this, 'load_textdomain' ) );
 
 		( new Notices( $this->requirements ) )->register();
+
+		if ( ! $this->requirements->can_run() ) {
+			return;
+		}
+
+		$loader = new Google_Loader( $this->options );
+		$loader->register();
+
+		if ( is_admin() ) {
+			( new Settings_Page( $this->options, $loader ) )->register();
+		}
 	}
 
 	/**

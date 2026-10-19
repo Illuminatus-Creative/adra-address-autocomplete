@@ -1,5 +1,5 @@
 /**
- * Decides whether a submitted address is still the one picked from a suggestion.
+ * Decides whether the submitted address still matches the selected address.
  *
  * The server-side status check must apply the same rules; keep them in sync.
  */
@@ -79,7 +79,7 @@ function postcodesMatch(
 }
 
 /**
- * Compares the address picked from a suggestion with the one being submitted.
+ * Compares the selected address with the submitted address.
  *
  * A field the suggestion left empty can be filled in freely, since Google doesn't return
  * every component for every country.

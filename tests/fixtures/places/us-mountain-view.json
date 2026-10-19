@@ -65,12 +65,12 @@
 		}
 	},
 	"expected": {
-		"address1": "1600 Amphitheatre Pkwy",
-		"address2": "",
+		"address_1": "1600 Amphitheatre Pkwy",
+		"address_2": "",
 		"city": "Mountain View",
 		"postcode": "94043",
 		"region": "California",
-		"countryCode": "US",
+		"country": "US",
 		"wcState": "CA"
 	}
 }

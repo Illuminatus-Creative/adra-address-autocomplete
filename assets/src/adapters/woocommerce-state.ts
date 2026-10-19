@@ -23,7 +23,7 @@ export function wooCommerceState(
 	place: ParsedPlace,
 	states: WooCommerceStates
 ): string {
-	const countryStates = states[place.countryCode];
+	const countryStates = states[place.country];
 
 	if (countryStates === null || countryStates === undefined) {
 		return place.region;

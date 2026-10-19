@@ -1,10 +1,10 @@
 # ADRA Address Autocomplete — Build Plan
 
-Plugin by The Ad Ranch. Internal use on our own and client sites.
+Plugin by The Ad Ranch. Internal use on our own and client sites. Terms follow [glossary.md](glossary.md).
 
 ## Goal
 
-Reduce wasted postage by helping people enter deliverable addresses, and flag the ones that weren't picked from a suggestion.
+Reduce wasted postage by helping people enter deliverable addresses, and flag the ones that didn't come from a selected suggestion.
 
 ## Scope
 
@@ -12,7 +12,7 @@ In scope:
 
 - Gravity Forms: Address field autocomplete.
 - WooCommerce: billing and shipping address autocomplete on
-  - classic (shortcode) checkout
+  - classic checkout
   - block checkout
   - My Account → Addresses
   - admin order edit screen
@@ -85,7 +85,8 @@ adra-address-autocomplete/
 │  ├─ Plugin.php                   loads modules based on active plugins
 │  ├─ Settings/Options.php         API key: ADRA_AA_GOOGLE_API_KEY constant, else option
 │  ├─ Settings/Settings_Page.php   Settings → Address Autocomplete (works without GF or WC)
-│  ├─ Assets/Google_Loader.php     one Maps JS loader, reuses google.maps if already present
+│  ├─ Assets/Google_Loader.php     one Maps JS loader; steps aside if another plugin loads Google Maps
+│  ├─ Assets/Bundle.php            registers webpack bundles from assets/build/
 │  ├─ Assets/Script_Data.php       countries + WooCommerce state lists for JS
 │  ├─ Address/Status.php           compares selected vs submitted address
 │  ├─ Gravity_Forms/Addon.php      GFAddOn: field setting, init scripts, entry meta, entry detail
@@ -95,6 +96,7 @@ adra-address-autocomplete/
 │  ├─ WooCommerce/Admin_Order.php  order edit screen (HPOS + legacy post screen)
 │  └─ WooCommerce/Order_Display.php
 ├─ assets/src/
+│  ├─ admin/settings.ts, key-check.ts  "Test key" button
 │  ├─ address/match.ts             selected vs submitted address comparison
 │  ├─ engine/places-client.ts      session tokens, fetchAutocompleteSuggestions, fetchFields
 │  ├─ engine/google-ready.ts       waits for Google, loads the Places library
@@ -131,8 +133,8 @@ Size: S = under a day, M = a few days, L = a week or more.
 |---|---|---|---|
 | 0 | Scaffold: main file, autoloading, WPCS phpcs, TypeScript typecheck, PHPUnit + Vitest, GitHub Actions running lint + tests | S | Empty plugin activates; CI green. The webpack build is added in phase 1, with the first script that needs bundling |
 | 1 | Engine: port and split `frontend.ts`; Vitest tests on Google place fixtures (US, CA, GB, IE, AU, NZ, NL, FR, DE, ES, IT, JP, SG) | M | Done. Normalization and state matching pass for all fixtures. **The fixtures are hand-written**, so before phase 4 is signed off, record real ones with `bin/record-place-fixture.mjs` (needs a Google key) and fix whatever they expose |
-| 2 | Settings page + Google loader + key check | S | Key from constant or option; Maps loads once, even with a form and checkout on the same page; a "Test key" button reports the usual setup mistakes (API not enabled, referrer not allowed, billing off) so each client's key can be checked on install |
-| 3 | Gravity Forms (adds the webpack build: the first script that needs bundling) | M | Per-field toggle; fills US and international Address fields; still works after multi-page navigation, save-and-continue and conditional logic; status saved to entry meta |
+| 2 | Settings page + Google loader + key check + webpack build | S | Done. Key from constant or option; Maps loads once, and the loader steps aside (and says so on the settings page) when another plugin loads it; a "Test key" button runs one real search from the browser and explains the usual setup mistakes. Checked in a real WordPress 7.1.3 + WooCommerce 11.2.1 site in Chromium, including a real Google response to an invalid key |
+| 3 | Gravity Forms | M | Per-field toggle; fills US and international Address fields; still works after multi-page navigation, save-and-continue and conditional logic; status saved to entry meta |
 | 4 | WooCommerce provider | M | Provider appears in WooCommerce settings; fills classic checkout, block checkout and My Account with correct state codes |
 | 5 | Address status + soft warning (classic, blocks, Gravity Forms) + order display | M | Correct status on test orders under HPOS and legacy storage; warning appears for `manual`/`modified` and never stops a second submit |
 | 6 | Admin order edit adapter | S–M | Billing and shipping fill on the order edit screen, including the state reload |
@@ -149,7 +151,7 @@ Optional later:
 - **Places API (New) country restriction is limited** (`includedRegionCodes`, max 15 countries). Stores shipping to more countries can't restrict results and will only get biased results.
 - **State mapping**: Google's region codes don't match WooCommerce's state codes for every country. The engine tries each administrative area as a code, as an ISO 3166-2 code (`BY` → `DE-BY`) and as a name (ignoring accents and words like "County"), with the second level first for ES and IT, where WooCommerce lists provinces. Unmatched states are left blank. The ES/IT ordering and the Irish county names are assumptions until real recordings confirm them.
 - **Places language**: Google answers in the visitor's browser language. Names (not codes) won't match WooCommerce's English state names for, say, a Japanese-language browser; those fall back to blank.
-- **Double-loading Google Maps** when another plugin (GPAA, store locators, map blocks) also loads it. The loader must reuse an existing `google.maps`. Show an admin notice when GP Address Autocomplete is also active.
+- **Double-loading Google Maps** when another plugin (GPAA, store locators, map blocks) also loads it. The loader steps aside when another enqueued script loads the Maps JavaScript API, and the engine uses that copy. That plugin's key then has to have the Places API (New) enabled, which we can't check except with "Test key". Scripts printed without `wp_enqueue_script` aren't detected; the `adra_aa_load_google_maps` filter turns our loader off for those sites.
 - **Public browser key**: it must be restricted by HTTP referrer and by API (Maps JavaScript API and Places API (New)), or anyone can use it on our bill.
 - **WooPayments stores**: if its provider is preferred, our address status will be `unknown`.
 - **The update channel can push code to every client site.** Anyone who can publish a release can do that. Turn on 2FA on the GitHub account, protect `main`, and only publish releases from the tag workflow.

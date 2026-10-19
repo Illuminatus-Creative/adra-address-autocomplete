@@ -77,12 +77,12 @@
 		}
 	},
 	"expected": {
-		"address1": "4 Chome-2-8 Shibakoen",
-		"address2": "",
+		"address_1": "4 Chome-2-8 Shibakoen",
+		"address_2": "",
 		"city": "Minato City",
 		"postcode": "105-0011",
 		"region": "Tokyo",
-		"countryCode": "JP",
+		"country": "JP",
 		"wcState": "JP13"
 	}
 }

@@ -49,12 +49,12 @@
 		}
 	},
 	"expected": {
-		"address1": "10 Bayfront Ave",
-		"address2": "",
+		"address_1": "10 Bayfront Ave",
+		"address_2": "",
 		"city": "Singapore",
 		"postcode": "018956",
 		"region": "",
-		"countryCode": "SG",
+		"country": "SG",
 		"wcState": ""
 	}
 }

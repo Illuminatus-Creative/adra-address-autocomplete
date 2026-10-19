@@ -2,7 +2,7 @@
 
 Google Places address autocomplete for Gravity Forms and WooCommerce, by The Ad Ranch. Its goal is fewer undeliverable addresses: it suggests real addresses as people type, records whether each submitted address matches a suggestion, and asks people to double-check addresses that don't.
 
-Status: in development. See [docs/plan.md](docs/plan.md) for scope, decisions and phases.
+Status: in development. See [docs/plan.md](docs/plan.md) for scope, decisions and phases. Terms are defined in [docs/glossary.md](docs/glossary.md).
 
 ## Requirements
 
@@ -22,6 +22,7 @@ composer test      # PHPUnit
 npm run lint:js    # ESLint (WordPress config)
 npm run typecheck  # TypeScript
 npm run test:js    # Vitest
+npm run build      # Bundles assets/src into assets/build (needed before the plugin's scripts load)
 ```
 
 PHP classes live in `src/` under the `Adra\AddressAutocomplete` namespace and are autoloaded by Composer (PSR-4), so a clone needs `composer install` before the plugin will activate.

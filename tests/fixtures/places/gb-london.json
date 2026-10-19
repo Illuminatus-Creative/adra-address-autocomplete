@@ -64,12 +64,12 @@
 		}
 	},
 	"expected": {
-		"address1": "10 Downing St",
-		"address2": "",
+		"address_1": "10 Downing St",
+		"address_2": "",
 		"city": "London",
 		"postcode": "SW1A 2AA",
 		"region": "Greater London",
-		"countryCode": "GB",
+		"country": "GB",
 		"wcState": "Greater London"
 	}
 }

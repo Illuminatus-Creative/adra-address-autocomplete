@@ -11,12 +11,12 @@ interface Fixture {
 	_source: string;
 	place: PlaceData;
 	expected: {
-		address1: string;
-		address2: string;
+		address_1: string;
+		address_2: string;
 		city: string;
 		postcode: string;
 		region: string;
-		countryCode: string;
+		country: string;
 		wcState: string;
 	} | null;
 }
@@ -70,10 +70,10 @@ describe('parsePlace', () => {
 				location: null,
 			})
 		).toMatchObject({
-			address1: '',
+			address_1: '',
 			city: '',
 			region: '',
-			countryCode: '',
+			country: '',
 			regionCandidates: [],
 		});
 	});

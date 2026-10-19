@@ -50,12 +50,12 @@
 		}
 	},
 	"expected": {
-		"address1": "College Green",
-		"address2": "",
+		"address_1": "College Green",
+		"address_2": "",
 		"city": "Dublin 2",
 		"postcode": "D02 PN40",
 		"region": "Co. Dublin",
-		"countryCode": "IE",
+		"country": "IE",
 		"wcState": "D"
 	}
 }

@@ -65,12 +65,12 @@
 		}
 	},
 	"expected": {
-		"address1": "290 Bremner Blvd",
-		"address2": "",
+		"address_1": "290 Bremner Blvd",
+		"address_2": "",
 		"city": "Toronto",
 		"postcode": "M5V 3L9",
 		"region": "Ontario",
-		"countryCode": "CA",
+		"country": "CA",
 		"wcState": "ON"
 	}
 }

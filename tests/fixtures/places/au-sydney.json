@@ -58,12 +58,12 @@
 		}
 	},
 	"expected": {
-		"address1": "Bennelong Point",
-		"address2": "",
+		"address_1": "Bennelong Point",
+		"address_2": "",
 		"city": "Sydney",
 		"postcode": "2000",
 		"region": "New South Wales",
-		"countryCode": "AU",
+		"country": "AU",
 		"wcState": "NSW"
 	}
 }

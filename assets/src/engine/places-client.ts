@@ -1,6 +1,6 @@
 /**
  * Thin wrapper around the Places API (New) in the Maps JavaScript API: suggestions while typing,
- * then details for the chosen one, within one billing session.
+ * then place details for the selected one, within one session.
  */
 
 import type { PlaceData, Suggestion } from './types';

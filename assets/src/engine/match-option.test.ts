@@ -16,13 +16,13 @@ function place(overrides: Partial<ParsedPlace>): ParsedPlace {
 		placeId: 'x',
 		formattedAddress: '',
 		location: null,
-		address1: '',
-		address2: '',
+		address_1: '',
+		address_2: '',
 		city: '',
 		postcode: '',
 		region: '',
 		regionCandidates: [],
-		countryCode: '',
+		country: '',
 		countryName: '',
 		...overrides,
 	};
@@ -69,7 +69,7 @@ describe('matchOption', () => {
 describe('matchRegion', () => {
 	it('matches a state select whose values are names', () => {
 		const california = place({
-			countryCode: 'US',
+			country: 'US',
 			region: 'California',
 			regionCandidates: [
 				{ level: 1, longText: 'California', shortText: 'CA' },
@@ -83,7 +83,7 @@ describe('matchRegion', () => {
 
 	it('matches ISO 3166-2 style codes', () => {
 		const bavaria = place({
-			countryCode: 'DE',
+			country: 'DE',
 			regionCandidates: [
 				{ level: 1, longText: 'Bayern', shortText: 'BY' },
 			],
@@ -99,7 +99,7 @@ describe('matchRegion', () => {
 
 	it('returns undefined rather than guessing', () => {
 		const unknown = place({
-			countryCode: 'US',
+			country: 'US',
 			regionCandidates: [
 				{ level: 1, longText: 'Atlantis', shortText: 'AT' },
 			],
