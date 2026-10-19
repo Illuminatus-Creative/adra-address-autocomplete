@@ -14,9 +14,10 @@ namespace Adra\AddressAutocomplete;
  */
 final class Requirements {
 
-	public const WORDPRESS     = '6.7';
-	public const WOOCOMMERCE   = '10.3';
-	public const GRAVITY_FORMS = '2.9';
+	public const WORDPRESS   = '6.7';
+	public const WOOCOMMERCE = '10.3';
+	// 3.0.3 switched the Address field's country choices to country codes; older versions are untested.
+	public const GRAVITY_FORMS = '3.0.3';
 
 	/**
 	 * Creates a requirements check for the given versions.

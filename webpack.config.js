@@ -5,6 +5,7 @@ module.exports = {
 	...defaultConfig,
 	entry: {
 		'admin-settings': './assets/src/admin/settings.ts',
+		'gravity-forms': './assets/src/gravity-forms.ts',
 	},
 	output: {
 		...defaultConfig.output,

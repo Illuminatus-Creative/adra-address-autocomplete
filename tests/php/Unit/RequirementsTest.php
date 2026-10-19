@@ -27,14 +27,14 @@ final class RequirementsTest extends TestCase {
 	}
 
 	public function test_runs_with_only_gravity_forms(): void {
-		$requirements = new Requirements( '6.8.1', null, '2.9.4' );
+		$requirements = new Requirements( '6.8.1', null, '3.1.3.4' );
 
 		$this->assertTrue( $requirements->can_run() );
 		$this->assertSame( array(), $requirements->problems() );
 	}
 
 	public function test_old_woocommerce_is_disabled_but_gravity_forms_still_runs(): void {
-		$requirements = new Requirements( '6.8.1', '10.2.3', '2.9.4' );
+		$requirements = new Requirements( '6.8.1', '10.2.3', '3.1.3.4' );
 
 		$this->assertTrue( $requirements->can_run() );
 		$this->assertFalse( $requirements->woocommerce_supported() );
@@ -58,7 +58,7 @@ final class RequirementsTest extends TestCase {
 	}
 
 	public function test_old_wordpress_stops_everything_and_reports_only_that(): void {
-		$requirements = new Requirements( '6.6.2', '10.3.0', '2.9.4' );
+		$requirements = new Requirements( '6.6.2', '10.3.0', '3.1.3.4' );
 
 		$this->assertFalse( $requirements->can_run() );
 		$this->assertSame( array( 'wordpress_too_old' ), array_column( $requirements->problems(), 'code' ) );

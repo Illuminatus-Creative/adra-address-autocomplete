@@ -1,7 +1,8 @@
 /**
  * Decides whether the submitted address still matches the selected address.
  *
- * The server-side status check must apply the same rules; keep them in sync.
+ * Mirrors src/Address/Status.php. Both are tested against
+ * tests/fixtures/address-match-cases.json; change them together.
  */
 
 export interface Address {
@@ -58,24 +59,15 @@ export function normalizePostcode(value: string): string {
 	return value.replace(/[\s-]/g, '').toUpperCase();
 }
 
-function postcodesMatch(
-	selected: string,
-	submitted: string,
-	country: string
-): boolean {
+/*
+ * Google returns 5-digit US ZIP codes, so adding the +4 extension isn't an edit. Keyed on the
+ * postcode's shape, not the country, because forms store the country as a code or a name.
+ */
+function postcodesMatch(selected: string, submitted: string): boolean {
 	const a = normalizePostcode(selected);
 	const b = normalizePostcode(submitted);
 
-	if (a === b) {
-		return true;
-	}
-
-	// Google returns 5-digit ZIPs; a customer adding the +4 extension hasn't changed the address.
-	if (country.toUpperCase() === 'US') {
-		return a.slice(0, 5) === b.slice(0, 5) && /^\d{5}$/.test(a.slice(0, 5));
-	}
-
-	return false;
+	return a === b || (/^\d{5}$/.test(a) && new RegExp(`^${a}\\d{4}$`).test(b));
 }
 
 /**
@@ -100,7 +92,7 @@ export function compareAddress(
 		}
 
 		if (field === 'postcode') {
-			return !postcodesMatch(before, after, selected.country);
+			return !postcodesMatch(before, after);
 		}
 
 		return normalizeText(before) !== normalizeText(after);

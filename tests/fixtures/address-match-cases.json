@@ -1,0 +1,72 @@
+{
+	"_source": "Shared by assets/src/address/match.test.ts and tests/php/Unit/StatusTest.php, so the JS and PHP comparisons can't drift apart.",
+	"selected": {
+		"address_1": "1600 Amphitheatre Pkwy",
+		"address_2": "",
+		"city": "Mountain View",
+		"state": "CA",
+		"postcode": "94043",
+		"country": "US"
+	},
+	"cases": [
+		{
+			"name": "unchanged",
+			"submitted": {},
+			"expected": { "status": "verified", "changed": [] }
+		},
+		{
+			"name": "formatting-only differences",
+			"submitted": { "address_1": "1600 amphitheatre pkwy.", "city": " MOUNTAIN   VIEW " },
+			"expected": { "status": "verified", "changed": [] }
+		},
+		{
+			"name": "accents and apostrophes",
+			"selected": { "address_1": "1 Rue de l’Église", "city": "Québec", "state": "", "postcode": "G1R 4P5", "country": "CA" },
+			"submitted": { "address_1": "1 rue de l'Eglise", "city": "Quebec", "state": "", "postcode": "g1r4p5", "country": "CA" },
+			"expected": { "status": "verified", "changed": [] }
+		},
+		{
+			"name": "address line 2 is ignored",
+			"submitted": { "address_2": "Suite 400" },
+			"expected": { "status": "verified", "changed": [] }
+		},
+		{
+			"name": "edited street and city",
+			"submitted": { "address_1": "1601 Amphitheatre Pkwy", "city": "Palo Alto" },
+			"expected": { "status": "modified", "changed": ["address_1", "city"] }
+		},
+		{
+			"name": "filling fields the suggestion left empty",
+			"selected": { "address_1": "1600 Amphitheatre Pkwy", "city": "Mountain View", "state": "", "postcode": "", "country": "US" },
+			"submitted": { "state": "CA", "postcode": "94043" },
+			"expected": { "status": "verified", "changed": [] }
+		},
+		{
+			"name": "clearing a filled field",
+			"submitted": { "postcode": "" },
+			"expected": { "status": "modified", "changed": ["postcode"] }
+		},
+		{
+			"name": "ZIP+4 extension added",
+			"submitted": { "postcode": "94043-1351" },
+			"expected": { "status": "verified", "changed": [] }
+		},
+		{
+			"name": "different ZIP",
+			"submitted": { "postcode": "94044" },
+			"expected": { "status": "modified", "changed": ["postcode"] }
+		},
+		{
+			"name": "ZIP+4 rule only applies to 5-digit postcodes",
+			"selected": { "address_1": "Rua Augusta 1", "city": "Lisboa", "state": "", "postcode": "1100-053", "country": "PT" },
+			"submitted": { "address_1": "Rua Augusta 1", "city": "Lisboa", "state": "", "postcode": "1100-999", "country": "PT" },
+			"expected": { "status": "modified", "changed": ["postcode"] }
+		},
+		{
+			"name": "country stored as a name (Gravity Forms US address type)",
+			"selected": { "address_1": "1600 Amphitheatre Pkwy", "city": "Mountain View", "state": "California", "postcode": "94043", "country": "United States" },
+			"submitted": { "address_1": "1600 Amphitheatre Pkwy", "city": "Mountain View", "state": "California", "postcode": "94043-1351", "country": "United States" },
+			"expected": { "status": "verified", "changed": [] }
+		}
+	]
+}

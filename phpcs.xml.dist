@@ -47,4 +47,9 @@
 	<rule ref="Squiz.Commenting.ClassComment.Missing">
 		<exclude-pattern>/tests/*</exclude-pattern>
 	</rule>
+
+	<!-- Tests read local fixture files; wp_remote_get() is for URLs. -->
+	<rule ref="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents">
+		<exclude-pattern>/tests/*</exclude-pattern>
+	</rule>
 </ruleset>

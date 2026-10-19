@@ -49,6 +49,10 @@ final class Bundle {
 				array(),
 				$asset['version'] ?? ADRA_AA_VERSION
 			);
+
+			if ( is_readable( $path . $name . '-rtl.css' ) ) {
+				wp_style_add_data( $handle, 'rtl', 'replace' );
+			}
 		}
 
 		return $handle;

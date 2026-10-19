@@ -9,6 +9,7 @@ namespace Adra\AddressAutocomplete;
 
 use Adra\AddressAutocomplete\Admin\Notices;
 use Adra\AddressAutocomplete\Assets\Google_Loader;
+use Adra\AddressAutocomplete\Gravity_Forms\Integration as Gravity_Forms_Integration;
 use Adra\AddressAutocomplete\Settings\Options;
 use Adra\AddressAutocomplete\Settings\Settings_Page;
 
@@ -45,6 +46,10 @@ final class Plugin {
 
 		if ( is_admin() ) {
 			( new Settings_Page( $this->options, $loader ) )->register();
+		}
+
+		if ( $this->requirements->gravity_forms_supported() ) {
+			( new Gravity_Forms_Integration( $loader ) )->register();
 		}
 	}
 

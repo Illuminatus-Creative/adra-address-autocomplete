@@ -33,7 +33,7 @@ Out of scope: Map field, Travel Estimate field, Routes API, Gravity Wiz add-on c
 | WooCommerce admin order edit | Our own adapter + our own dropdown. | WooCommerce's framework doesn't run on the admin order screen. |
 | Gravity Forms | Our own adapter + our own dropdown, ported from GPAA. | No core framework to plug into. |
 | WooPayments stores | Both providers show up in WooCommerce → Settings → General → Address autocomplete. The admin picks the preferred one. | Address status tracking only works when our provider handles the selection. |
-| Minimum versions | WooCommerce 10.3, plus the latest Gravity Forms and WordPress we test against. PHP 8.1. | WooCommerce 10.3 is the first release with block checkout support for providers. All client stores are up to date, so we don't need a fallback for older WooCommerce versions. |
+| Minimum versions | WooCommerce 10.3, Gravity Forms 3.0.3 (country choices became codes; older versions untested), WordPress 6.7, PHP 8.1. | WooCommerce 10.3 is the first release with block checkout support for providers. All client stores are up to date, so we don't need a fallback for older WooCommerce versions. |
 | Google keys | One Google Cloud project and key per client, set per site (`ADRA_AA_GOOGLE_API_KEY` in `wp-config.php`, or the settings page). | Each client is billed for their own usage. |
 | Updates | GitHub Releases + [plugin-update-checker](https://github.com/YahnisElsts/plugin-update-checker) (MIT, v5), using a release zip asset built by GitHub Actions. | Updates show up on client sites' normal Plugins screen. |
 | Bad addresses | Record the address status **and** show a soft warning as a one-time confirm at submit. | Agreed with The Ad Ranch. A one-time confirm gets read; an inline message gets scrolled past. |
@@ -51,7 +51,7 @@ When a suggestion is selected, the client records the normalized address. On sub
 Where it's stored:
 
 - WooCommerce: order meta `_adra_aa_billing_status` and `_adra_aa_shipping_status`, plus the Google `place_id`. Written through `$order->update_meta_data()` so it works with both HPOS and legacy order storage. Shown as a badge in the order edit screen, with an optional order list column.
-- Gravity Forms: entry meta `adra_aa_status_{fieldId}` and `adra_aa_place_id_{fieldId}`. Registered so it can be filtered and used in conditional logic.
+- Gravity Forms: entry meta `adra_aa_status_{fieldId}`, `adra_aa_changed_{fieldId}` (edited parts) and `adra_aa_place_id_{fieldId}`. The status is registered as entry meta, so it can be shown in the entry list, filtered on and used in conditional logic, and an "Address status" box shows it on the entry screen. Not recorded when the field is hidden by conditional logic.
 - My Account addresses: not recorded (there's no order or entry to attach it to).
 
 Soft warning:
@@ -134,7 +134,7 @@ Size: S = under a day, M = a few days, L = a week or more.
 | 0 | Scaffold: main file, autoloading, WPCS phpcs, TypeScript typecheck, PHPUnit + Vitest, GitHub Actions running lint + tests | S | Empty plugin activates; CI green. The webpack build is added in phase 1, with the first script that needs bundling |
 | 1 | Engine: port and split `frontend.ts`; Vitest tests on Google place fixtures (US, CA, GB, IE, AU, NZ, NL, FR, DE, ES, IT, JP, SG) | M | Done. Normalization and state matching pass for all fixtures. **The fixtures are hand-written**, so before phase 4 is signed off, record real ones with `bin/record-place-fixture.mjs` (needs a Google key) and fix whatever they expose |
 | 2 | Settings page + Google loader + key check + webpack build | S | Done. Key from constant or option; Maps loads once, and the loader steps aside (and says so on the settings page) when another plugin loads it; a "Test key" button runs one real search from the browser and explains the usual setup mistakes. Checked in a real WordPress 7.1.3 + WooCommerce 11.2.1 site in Chromium, including a real Google response to an invalid key |
-| 3 | Gravity Forms | M | Per-field toggle; fills US and international Address fields; still works after multi-page navigation, save-and-continue and conditional logic; status saved to entry meta |
+| 3 | Gravity Forms | M | Done. Per-field toggle in the form editor; fills International and US Address fields; works across multi-page forms, save-and-continue and conditional logic; status saved to entry meta and shown on the entry screen. Checked in a real WordPress 7.1.3 + Gravity Forms 3.1.3.4 site in Chromium (17 checks), with Google's Places library replaced by a stand-in returning fixture data |
 | 4 | WooCommerce provider | M | Provider appears in WooCommerce settings; fills classic checkout, block checkout and My Account with correct state codes |
 | 5 | Address status + soft warning (classic, blocks, Gravity Forms) + order display | M | Correct status on test orders under HPOS and legacy storage; warning appears for `manual`/`modified` and never stops a second submit |
 | 6 | Admin order edit adapter | S–M | Billing and shipping fill on the order edit screen, including the state reload |
@@ -154,6 +154,7 @@ Optional later:
 - **Double-loading Google Maps** when another plugin (GPAA, store locators, map blocks) also loads it. The loader steps aside when another enqueued script loads the Maps JavaScript API, and the engine uses that copy. That plugin's key then has to have the Places API (New) enabled, which we can't check except with "Test key". Scripts printed without `wp_enqueue_script` aren't detected; the `adra_aa_load_google_maps` filter turns our loader off for those sites.
 - **Public browser key**: it must be restricted by HTTP referrer and by API (Maps JavaScript API and Places API (New)), or anyone can use it on our bill.
 - **WooPayments stores**: if its provider is preferred, our address status will be `unknown`.
+- **The selected address comes from the browser.** A determined person could forge a `verified` status by editing the hidden input. The status is for catching mistakes, not fraud; checking server-side would need a second, server-restricted Google key.
 - **The update channel can push code to every client site.** Anyone who can publish a release can do that. Turn on 2FA on the GitHub account, protect `main`, and only publish releases from the tag workflow.
 
 ## Open questions

@@ -8,7 +8,7 @@ Status: in development. See [docs/plan.md](docs/plan.md) for scope, decisions an
 
 - WordPress 6.7+
 - PHP 8.1+
-- Gravity Forms 2.9+ and/or WooCommerce 10.3+
+- Gravity Forms 3.0.3+ and/or WooCommerce 10.3+
 - A Google Cloud API key with the Maps JavaScript API and Places API (New) enabled, one per client site
 
 ## Development
