@@ -1,0 +1,75 @@
+{
+	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"place": {
+		"id": "hand-written-gb-london",
+		"formattedAddress": "10 Downing St, London SW1A 2AA, UK",
+		"adrFormatAddress": "<span class=\"street-address\">10 Downing St</span>, <span class=\"locality\">London</span> <span class=\"postal-code\">SW1A 2AA</span>, <span class=\"country-name\">UK</span>",
+		"addressComponents": [
+			{
+				"longText": "10",
+				"shortText": "10",
+				"types": [
+					"street_number"
+				]
+			},
+			{
+				"longText": "Downing Street",
+				"shortText": "Downing St",
+				"types": [
+					"route"
+				]
+			},
+			{
+				"longText": "London",
+				"shortText": "London",
+				"types": [
+					"postal_town"
+				]
+			},
+			{
+				"longText": "Greater London",
+				"shortText": "Greater London",
+				"types": [
+					"administrative_area_level_2",
+					"political"
+				]
+			},
+			{
+				"longText": "England",
+				"shortText": "England",
+				"types": [
+					"administrative_area_level_1",
+					"political"
+				]
+			},
+			{
+				"longText": "United Kingdom",
+				"shortText": "GB",
+				"types": [
+					"country",
+					"political"
+				]
+			},
+			{
+				"longText": "SW1A 2AA",
+				"shortText": "SW1A 2AA",
+				"types": [
+					"postal_code"
+				]
+			}
+		],
+		"location": {
+			"lat": 51.5034,
+			"lng": -0.1276
+		}
+	},
+	"expected": {
+		"address1": "10 Downing St",
+		"address2": "",
+		"city": "London",
+		"postcode": "SW1A 2AA",
+		"region": "Greater London",
+		"countryCode": "GB",
+		"wcState": "Greater London"
+	}
+}

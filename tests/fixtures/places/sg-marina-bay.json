@@ -1,0 +1,60 @@
+{
+	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"place": {
+		"id": "hand-written-sg-marina-bay",
+		"formattedAddress": "10 Bayfront Ave, Singapore 018956",
+		"adrFormatAddress": "<span class=\"street-address\">10 Bayfront Ave</span>, <span class=\"country-name\">Singapore</span> <span class=\"postal-code\">018956</span>",
+		"addressComponents": [
+			{
+				"longText": "10",
+				"shortText": "10",
+				"types": [
+					"street_number"
+				]
+			},
+			{
+				"longText": "Bayfront Avenue",
+				"shortText": "Bayfront Ave",
+				"types": [
+					"route"
+				]
+			},
+			{
+				"longText": "Singapore",
+				"shortText": "Singapore",
+				"types": [
+					"locality",
+					"political"
+				]
+			},
+			{
+				"longText": "Singapore",
+				"shortText": "SG",
+				"types": [
+					"country",
+					"political"
+				]
+			},
+			{
+				"longText": "018956",
+				"shortText": "018956",
+				"types": [
+					"postal_code"
+				]
+			}
+		],
+		"location": {
+			"lat": 1.2834,
+			"lng": 103.8607
+		}
+	},
+	"expected": {
+		"address1": "10 Bayfront Ave",
+		"address2": "",
+		"city": "Singapore",
+		"postcode": "018956",
+		"region": "",
+		"countryCode": "SG",
+		"wcState": ""
+	}
+}

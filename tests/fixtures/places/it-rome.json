@@ -1,0 +1,84 @@
+{
+	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"place": {
+		"id": "hand-written-it-rome",
+		"formattedAddress": "Piazza del Colosseo, 1, 00184 Roma RM, Italy",
+		"adrFormatAddress": "<span class=\"street-address\">Piazza del Colosseo, 1</span>, <span class=\"postal-code\">00184</span> <span class=\"locality\">Roma</span> <span class=\"region\">RM</span>, <span class=\"country-name\">Italy</span>",
+		"addressComponents": [
+			{
+				"longText": "1",
+				"shortText": "1",
+				"types": [
+					"street_number"
+				]
+			},
+			{
+				"longText": "Piazza del Colosseo",
+				"shortText": "Piazza del Colosseo",
+				"types": [
+					"route"
+				]
+			},
+			{
+				"longText": "Roma",
+				"shortText": "Roma",
+				"types": [
+					"locality",
+					"political"
+				]
+			},
+			{
+				"longText": "Roma",
+				"shortText": "Roma",
+				"types": [
+					"administrative_area_level_3",
+					"political"
+				]
+			},
+			{
+				"longText": "Città Metropolitana di Roma Capitale",
+				"shortText": "RM",
+				"types": [
+					"administrative_area_level_2",
+					"political"
+				]
+			},
+			{
+				"longText": "Lazio",
+				"shortText": "Lazio",
+				"types": [
+					"administrative_area_level_1",
+					"political"
+				]
+			},
+			{
+				"longText": "Italy",
+				"shortText": "IT",
+				"types": [
+					"country",
+					"political"
+				]
+			},
+			{
+				"longText": "00184",
+				"shortText": "00184",
+				"types": [
+					"postal_code"
+				]
+			}
+		],
+		"location": {
+			"lat": 41.8902,
+			"lng": 12.4922
+		}
+	},
+	"expected": {
+		"address1": "Piazza del Colosseo, 1",
+		"address2": "",
+		"city": "Roma",
+		"postcode": "00184",
+		"region": "Città Metropolitana di Roma Capitale",
+		"countryCode": "IT",
+		"wcState": "RM"
+	}
+}

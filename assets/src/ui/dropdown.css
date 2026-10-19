@@ -1,0 +1,52 @@
+/*
+ * Suggestion list. Mirrors Google's legacy Places Autocomplete dropdown, as GP Address
+ * Autocomplete did, so it looks familiar. Fixed to the viewport and attached to <body> so it
+ * isn't clipped by overflow on the form or a modal.
+ */
+.adra-aa-suggestions {
+	position: fixed;
+	z-index: 100000;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	list-style: none;
+	background: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-top: none;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	font-family: Arial, sans-serif;
+	font-size: 11px;
+	color: #515151;
+	text-align: left;
+}
+
+.adra-aa-suggestions[hidden] {
+	display: none;
+}
+
+.adra-aa-suggestion {
+	margin: 0;
+	padding: 0 4px;
+	overflow: hidden;
+	line-height: 30px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	cursor: default;
+	border-top: 1px solid #e6e6e6;
+}
+
+.adra-aa-suggestion:first-child {
+	border-top: none;
+}
+
+.adra-aa-suggestion.is-active,
+.adra-aa-suggestion:hover {
+	background: #fafafa;
+}
+
+.adra-aa-suggestion__main {
+	padding-right: 3px;
+	font-size: 13px;
+	color: #000;
+}

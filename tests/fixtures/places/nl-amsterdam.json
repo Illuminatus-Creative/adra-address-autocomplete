@@ -1,0 +1,76 @@
+{
+	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"place": {
+		"id": "hand-written-nl-amsterdam",
+		"formattedAddress": "Museumstraat 1, 1071 XX Amsterdam, Netherlands",
+		"adrFormatAddress": "<span class=\"street-address\">Museumstraat 1</span>, <span class=\"postal-code\">1071 XX</span> <span class=\"locality\">Amsterdam</span>, <span class=\"country-name\">Netherlands</span>",
+		"addressComponents": [
+			{
+				"longText": "1",
+				"shortText": "1",
+				"types": [
+					"street_number"
+				]
+			},
+			{
+				"longText": "Museumstraat",
+				"shortText": "Museumstraat",
+				"types": [
+					"route"
+				]
+			},
+			{
+				"longText": "Amsterdam",
+				"shortText": "Amsterdam",
+				"types": [
+					"locality",
+					"political"
+				]
+			},
+			{
+				"longText": "Amsterdam",
+				"shortText": "Amsterdam",
+				"types": [
+					"administrative_area_level_2",
+					"political"
+				]
+			},
+			{
+				"longText": "Noord-Holland",
+				"shortText": "NH",
+				"types": [
+					"administrative_area_level_1",
+					"political"
+				]
+			},
+			{
+				"longText": "Netherlands",
+				"shortText": "NL",
+				"types": [
+					"country",
+					"political"
+				]
+			},
+			{
+				"longText": "1071 XX",
+				"shortText": "1071 XX",
+				"types": [
+					"postal_code"
+				]
+			}
+		],
+		"location": {
+			"lat": 52.36,
+			"lng": 4.8852
+		}
+	},
+	"expected": {
+		"address1": "Museumstraat 1",
+		"address2": "",
+		"city": "Amsterdam",
+		"postcode": "1071 XX",
+		"region": "Noord-Holland",
+		"countryCode": "NL",
+		"wcState": ""
+	}
+}
