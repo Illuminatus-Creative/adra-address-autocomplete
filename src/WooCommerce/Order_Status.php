@@ -9,6 +9,7 @@ namespace Adra\AddressAutocomplete\WooCommerce;
 
 use Adra\AddressAutocomplete\Address\Selection;
 use Adra\AddressAutocomplete\Address\Status;
+use Adra\AddressAutocomplete\Address\Warning;
 use WC_Order;
 
 /**
@@ -114,6 +115,8 @@ final class Order_Status {
 			$order->update_meta_data( self::meta_key( $type, 'status' ), $result['status'] );
 			$order->update_meta_data( self::meta_key( $type, 'changed' ), implode( ',', $result['changed'] ) );
 			$order->update_meta_data( self::meta_key( $type, 'place_id' ), $result['placeId'] );
+			// Lets the order screen tell when the address was edited after checkout.
+			$order->update_meta_data( self::meta_key( $type, 'address_key' ), Warning::key( $addresses[ $type ] ) );
 		}
 	}
 
@@ -167,7 +170,7 @@ final class Order_Status {
 	 * Order meta key.
 	 *
 	 * @param string $type  "billing" or "shipping".
-	 * @param string $field "status", "changed" or "place_id".
+	 * @param string $field "status", "changed", "place_id" or "address_key".
 	 */
 	public static function meta_key( string $type, string $field ): string {
 		return '_adra_aa_' . $type . '_' . $field;

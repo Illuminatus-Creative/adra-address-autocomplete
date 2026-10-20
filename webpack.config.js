@@ -6,6 +6,7 @@ module.exports = {
 	entry: {
 		'admin-settings': './assets/src/admin/settings.ts',
 		'gravity-forms': './assets/src/gravity-forms.ts',
+		'woocommerce-admin-order': './assets/src/woocommerce-admin-order.ts',
 		'woocommerce-provider': './assets/src/woocommerce-provider.ts',
 	},
 	output: {

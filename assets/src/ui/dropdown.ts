@@ -26,6 +26,11 @@ export interface DropdownOptions {
 	 * results appear without a Google map. Without a logo URL, the text "Google" is used.
 	 */
 	attribution?: { label: string; logoUrl?: string };
+	/**
+	 * Minimum width in pixels, for narrow inputs. The list grows to the right, but never past the
+	 * viewport. Default: the input's width.
+	 */
+	minWidth?: number;
 }
 
 let instances = 0;
@@ -385,8 +390,14 @@ export class SuggestionDropdown {
 		const rect = this.input.getBoundingClientRect();
 		const offset = visualViewportOffset();
 
+		const room = document.documentElement.clientWidth - rect.left - 8;
+		const width = Math.max(
+			rect.width,
+			Math.min(this.options.minWidth ?? 0, room)
+		);
+
 		this.container.style.top = `${rect.bottom + offset.y}px`;
 		this.container.style.left = `${rect.left + offset.x}px`;
-		this.container.style.width = `${rect.width}px`;
+		this.container.style.width = `${width}px`;
 	}
 }

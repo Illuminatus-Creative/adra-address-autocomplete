@@ -270,6 +270,30 @@ describe('SuggestionDropdown attribution', () => {
 		expect(items()).toHaveLength(2);
 	});
 
+	it('widens to the minimum width for a narrow input, within the viewport', async () => {
+		vi.spyOn(input, 'getBoundingClientRect').mockReturnValue(
+			new DOMRect(100, 0, 120, 30)
+		);
+		vi.spyOn(
+			document.documentElement,
+			'clientWidth',
+			'get'
+		).mockReturnValue(1000);
+		setup({ minWidth: 360 });
+		await type('main');
+
+		expect(dropdown!.container.style.width).toBe('360px');
+
+		vi.spyOn(
+			document.documentElement,
+			'clientWidth',
+			'get'
+		).mockReturnValue(400);
+		window.dispatchEvent(new Event('resize'));
+
+		expect(dropdown!.container.style.width).toBe('292px');
+	});
+
 	it('falls back to text when no logo is given', () => {
 		setup();
 

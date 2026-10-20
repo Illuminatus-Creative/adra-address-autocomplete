@@ -8,6 +8,7 @@
 namespace Adra\AddressAutocomplete\WooCommerce;
 
 use Adra\AddressAutocomplete\Address\Status;
+use Adra\AddressAutocomplete\Address\Warning;
 use WC_Order;
 
 /**
@@ -72,6 +73,10 @@ final class Order_Display {
 				);
 			}
 
+			if ( self::edited_since_checkout( $order, $type ) ) {
+				printf( '<br><em>%s</em>', esc_html__( 'The address has been edited since checkout. This status is for the address as ordered.', 'adra-address-autocomplete' ) );
+			}
+
 			echo '</li>';
 		}
 
@@ -80,5 +85,17 @@ final class Order_Display {
 		if ( 0 === $shown ) {
 			printf( '<p>%s</p>', esc_html__( 'Not recorded for this order.', 'adra-address-autocomplete' ) );
 		}
+	}
+
+	/**
+	 * Whether the address differs from the one the status was recorded for.
+	 *
+	 * @param WC_Order $order Order.
+	 * @param string   $type  "billing" or "shipping".
+	 */
+	private static function edited_since_checkout( WC_Order $order, string $type ): bool {
+		$recorded = (string) $order->get_meta( Order_Status::meta_key( $type, 'address_key' ) );
+
+		return '' !== $recorded && Warning::key( $order->get_address( $type ) ) !== $recorded;
 	}
 }

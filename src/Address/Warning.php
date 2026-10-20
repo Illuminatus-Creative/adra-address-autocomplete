@@ -29,6 +29,7 @@ final class Warning {
 
 	/**
 	 * Identifies an address regardless of formatting, so a confirmation only covers that address.
+	 * Also stored with an order's address status, to tell when the address was edited later.
 	 *
 	 * @param array<string, mixed> $address Address fields.
 	 */

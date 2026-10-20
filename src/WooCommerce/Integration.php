@@ -49,6 +49,7 @@ final class Integration {
 
 		if ( is_admin() ) {
 			( new Order_Display() )->register();
+			( new Admin_Order( $this->loader ) )->register();
 		}
 	}
 
