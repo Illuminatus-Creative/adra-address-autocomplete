@@ -47,8 +47,10 @@ cp -R src "$STAGE/src"
 cp -R assets/build assets/images "$STAGE/assets/"
 [[ -d languages ]] && cp -R languages "$STAGE/languages"
 
-composer install --working-dir="$STAGE" --no-dev --optimize-autoloader --no-interaction --no-progress --quiet
+composer install --working-dir="$STAGE" --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress --quiet
 rm "$STAGE/composer.json" "$STAGE/composer.lock"
+# Composer falls back to a git clone when it can't download a package, which brings its history.
+find "$STAGE" -name .git -prune -exec rm -rf {} +
 
 # Every PHP file must parse on the minimum PHP version's syntax (checked with the runner's PHP).
 find "$STAGE" -name '*.php' -not -path '*/vendor/*' -print0 | xargs -0 -n1 php -l >/dev/null
