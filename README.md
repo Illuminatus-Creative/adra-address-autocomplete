@@ -44,9 +44,9 @@ Gravity Forms is commercial, so `bin/e2e-env.sh` only installs it when `GRAVITY_
 
 1. Set the new version in three places: the `Version:` header and `ADRA_AA_VERSION` in `adra-address-autocomplete.php`, and `version` in `package.json`.
 2. Merge to `main`.
-3. Tag the merge commit and push the tag: `git tag v1.2.0 && git push origin v1.2.0`.
+3. Tag the merge commit and push the tag: `git tag v1.2.0 && git push origin v1.2.0`. Or, on GitHub, Releases → Draft a new release, with a new tag `v1.2.0` on `main`, and publish it.
 
-The release workflow runs every check, builds `adra-address-autocomplete.zip` with `bin/build-zip.sh`, and publishes it as a GitHub release. It refuses a tag that isn't on `main` or doesn't match the version. A tag with a suffix (`v1.2.0-rc.1`) becomes a pre-release, which sites ignore.
+The release workflow runs every check, builds `adra-address-autocomplete.zip` with `bin/build-zip.sh`, and publishes it as a GitHub release (or attaches it to the release made on the website, a few minutes after publishing it). It refuses a tag that isn't on `main` or doesn't match the version. A tag with a suffix (`v1.2.0-rc.1`) becomes a pre-release, which sites ignore.
 
 To install the plugin on a site for the first time, upload that zip under Plugins → Add New → Upload Plugin. The source code zips GitHub adds to each release don't work: they lack `vendor/` and the built scripts.
 

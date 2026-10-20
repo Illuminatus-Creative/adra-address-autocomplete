@@ -49,6 +49,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
         run: |
+          # A release made on GitHub's website creates the tag, which starts this workflow; the
+          # release then already exists, so attach the zip to it.
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/adra-address-autocomplete.zip --clobber
+            exit 0
+          fi
+
           flags=(--verify-tag --title "$TAG" --generate-notes)
           # A tag like v1.2.0-rc.1 is a pre-release; the update checker ignores those.
           if [[ "$TAG" == *-* ]]; then
