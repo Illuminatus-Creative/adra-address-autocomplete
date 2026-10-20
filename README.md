@@ -34,7 +34,7 @@ The Playwright tests run against a real WordPress + WooCommerce site on SQLite a
 
 ```sh
 npx playwright install chromium
-bin/e2e-env.sh       # builds the site in .e2e/ (run again for a fresh one)
+bin/e2e-env.sh       # builds the site in your temp folder (run again for a fresh one)
 npm run test:e2e
 ```
 

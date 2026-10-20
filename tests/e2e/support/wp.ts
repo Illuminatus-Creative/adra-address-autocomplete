@@ -8,8 +8,7 @@ import { join } from 'node:path';
 
 import type { Page } from '@playwright/test';
 
-const root = join(__dirname, '../../..');
-const e2e = join(root, '.e2e');
+import { siteDir as e2e } from './site-dir';
 
 export const site = JSON.parse(
 	readFileSync(join(e2e, 'site.json'), 'utf8')
@@ -105,4 +104,21 @@ export function setSetting(name: string, value: string | number): void {
 			name
 		)} ] = ${JSON.stringify(value)}; update_option( 'adra_aa_settings', $o );`
 	);
+}
+
+/**
+ * Waits for WooCommerce to move focus to the page's first notice, which it does 500 ms after
+ * loading so screen readers announce it ("… has been added to your cart"). Typing before then
+ * loses keystrokes to the notice.
+ *
+ * @param page Page.
+ */
+export async function waitForNoticeFocus(page: Page): Promise<void> {
+	await page.waitForFunction(() => {
+		const notice = document.querySelector(
+			'.woocommerce-message[role="alert"], .woocommerce-error[role="alert"], .wc-block-components-notice-banner[role="alert"]'
+		);
+
+		return !notice || notice.ownerDocument.activeElement === notice;
+	});
 }

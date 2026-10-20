@@ -5,6 +5,5 @@
 *.zip
 .DS_Store
 /dist/
-/.e2e/
 /test-results/
 /playwright-report/

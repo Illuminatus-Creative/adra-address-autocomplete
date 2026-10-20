@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Builds the WordPress site the end-to-end tests run against, in .e2e/. It uses SQLite and PHP's
+# Builds the WordPress site the end-to-end tests run against. It uses SQLite and PHP's
 # built-in server, so it needs neither MySQL nor Docker. Everything is downloaded from GitHub.
 # Running it again starts from a fresh site.
 #
@@ -13,6 +13,10 @@
 #   E2E_CACHE          Folder of already downloaded zips (woocommerce.zip,
 #                      plugin-sqlite-database-integration.zip, wp-cli.phar) to use instead.
 #   E2E_PORT           Port the site is served on (default 8889).
+#   E2E_DIR            Where to build the site (default: adra-address-autocomplete-e2e in the
+#                      system temp folder). Keep it outside this repository: the plugin is
+#                      symlinked into the site, and WordPress would count everything under the
+#                      repository, WooCommerce included, as part of it.
 
 set -euo pipefail
 
@@ -25,7 +29,7 @@ WP_CLI_VERSION=2.12.0
 E2E_PORT=${E2E_PORT:-8889}
 
 ROOT=$(pwd)
-DIR="$ROOT/.e2e"
+DIR=${E2E_DIR:-${TMPDIR:-/tmp}/adra-address-autocomplete-e2e}
 SITE="$DIR/wp"
 PLUGINS="$SITE/wp-content/plugins"
 

@@ -1,9 +1,11 @@
 /**
- * End-to-end tests. Run `bin/e2e-env.sh` once to build the site in .e2e/, then `npm run test:e2e`.
+ * End-to-end tests. Run `bin/e2e-env.sh` once to build the site, then `npm run test:e2e`.
  * Google is replaced by a stand-in (tests/e2e/support/google.ts), so no key or network is needed.
  */
 
 import { defineConfig } from '@playwright/test';
+
+import { siteDir } from './tests/e2e/support/site-dir';
 
 const port = process.env.E2E_PORT ?? '8889';
 const baseURL = `http://127.0.0.1:${port}`;
@@ -30,7 +32,7 @@ export default defineConfig({
 		},
 	},
 	webServer: {
-		command: `php -S 127.0.0.1:${port} -t .e2e/wp tests/e2e/router.php`,
+		command: `php -S 127.0.0.1:${port} -t "${siteDir}/wp" tests/e2e/router.php`,
 		url: `${baseURL}/wp-login.php`,
 		reuseExistingServer: !process.env.CI,
 		stdout: 'ignore',

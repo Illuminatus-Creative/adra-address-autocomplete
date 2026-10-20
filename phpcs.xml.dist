@@ -6,7 +6,6 @@
 	<exclude-pattern>/vendor/*</exclude-pattern>
 	<exclude-pattern>/node_modules/*</exclude-pattern>
 	<exclude-pattern>/assets/build/*</exclude-pattern>
-	<exclude-pattern>/.e2e/*</exclude-pattern>
 	<exclude-pattern>/dist/*</exclude-pattern>
 
 	<arg name="extensions" value="php"/>

@@ -7,7 +7,12 @@ import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
 import { places, stubGoogle } from '../support/google';
-import { latestOrder, setSetting, site } from '../support/wp';
+import {
+	latestOrder,
+	setSetting,
+	site,
+	waitForNoticeFocus,
+} from '../support/wp';
 
 const WARNING = 'We couldn’t match this address to a known address.';
 const typed = {
@@ -29,6 +34,7 @@ test.describe('classic checkout', () => {
 	async function openCheckout(page: Page) {
 		await addToCart(page);
 		await page.goto(`/${site.pages.classicCheckout}/`);
+		await waitForNoticeFocus(page);
 		await page.fill('#billing_first_name', 'Test');
 		await page.fill('#billing_last_name', 'Customer');
 		await page.fill('#billing_phone', '5555555555');
@@ -134,7 +140,10 @@ test.describe('classic checkout', () => {
 	test('records an edited suggestion as modified', async ({ page }) => {
 		await openCheckout(page);
 		await select(page, 'billing', '1600 Amphitheatre', 'Mountain View');
-		await expect(page.locator('#billing_state')).toHaveValue('CA');
+		// WooCommerce fills the city a moment after the street; edit it only once it has.
+		await expect(page.locator('#billing_city')).toHaveValue(
+			'Mountain View'
+		);
 		await page.fill('#billing_city', 'Palo Alto');
 
 		expect(await placeOrder(page)).toBe('warned');
@@ -171,12 +180,7 @@ test.describe('block checkout', () => {
 		await addToCart(page);
 		await page.goto(`/${site.pages.blockCheckout}/`);
 		await page.locator('#shipping-address_1').waitFor();
-		/*
-		 * The block checkout moves focus to its "added to cart" notice shortly after loading,
-		 * which would cut typing short. There's no event for it, so wait it out.
-		 */
-		await page.waitForLoadState('networkidle');
-		await page.waitForTimeout(2000);
+		await waitForNoticeFocus(page);
 		await page.fill('#email', 'block@example.com');
 		await page.fill('#shipping-first_name', 'Block');
 		await page.fill('#shipping-last_name', 'Customer');
