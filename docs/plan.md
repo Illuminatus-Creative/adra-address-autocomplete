@@ -50,27 +50,31 @@ When a suggestion is selected, the client records the normalized address. On sub
 
 Where it's stored:
 
-- WooCommerce: order meta `_adra_aa_billing_status` and `_adra_aa_shipping_status`, plus the Google `place_id`. Written through `$order->update_meta_data()` so it works with both HPOS and legacy order storage. Shown as a badge in the order edit screen, with an optional order list column.
+- WooCommerce: order meta `_adra_aa_billing_status` and `_adra_aa_shipping_status`, plus the Google `place_id`. Written through `$order->update_meta_data()` so it works with both HPOS and legacy order storage. Shown in an "Address status" box on the order screen, with the edited parts for `modified`. No order list column yet. When one address has no selection of its own but is the same address as the other (shipping to the billing address, or "use same address for billing"), it shares the other's selection.
 - Gravity Forms: entry meta `adra_aa_status_{fieldId}`, `adra_aa_changed_{fieldId}` (edited parts) and `adra_aa_place_id_{fieldId}`. The status is registered as entry meta, so it can be shown in the entry list, filtered on and used in conditional logic, and an "Address status" box shows it on the entry screen. Not recorded when the field is hidden by conditional logic.
 - My Account addresses: not recorded (there's no order or entry to attach it to).
 
 Soft warning:
 
 - Shown when the status would be `manual` or `modified`. Never blocks a valid submission for good.
-- Wording (filterable): "We couldn't match this address to a known address. Please check it before continuing."
+- Wording (filter `adra_aa_soft_warning_message`): "We couldn't match this address to a known address. Please check it, then submit again to use it as entered."
+- WooCommerce: only the address the order ships to is checked (shipping when shipping to a different address, otherwise billing). Both addresses still get a status.
+- No warning for an address that was already in the form when the page loaded (a returning customer's saved address) and hasn't been edited. Its status is still `manual`.
+- No warning for an address another provider handled (`unknown`), or when the street is empty (the form's own required check handles that).
 - One-time confirm: the first submit with an unconfirmed address stops and shows the warning. Submitting again with the same address goes through. Editing the address again re-arms the check.
 - Gravity Forms: server-side in `gform_validation`. The field fails validation with the warning, and a hidden `adra_aa_confirmed_{fieldId}` input carries a hash of the warned address, so the next submit with that address passes.
 - Classic checkout: client-side, by returning `false` from the `checkout_place_order` handler the first time.
-- Block checkout: client-side, through an `onCheckoutValidation` observer registered with `registerPlugin`, which returns the warning the first time.
+- Block checkout: client-side, through `wc.blocksCheckoutEvents.checkoutEvents.onCheckoutValidation`, which returns the warning as an error the first time. WooCommerce shows it under its own heading, "Please fix the following error before continuing", which we can't change.
 - The warning is a convenience, not a security control, so client-side is fine for WooCommerce. The status itself is always computed server-side.
 - Applies to classic checkout, block checkout and Gravity Forms. Not shown on the admin order screen.
-- Settings: on/off, and on/off for addresses outside the countries Google covers well.
+- Settings: on/off (on by default). The status is recorded either way. A per-country switch was dropped: Google returns suggestions for every country, so there's no list to base it on.
 
 How the data reaches the server:
 
-- Classic checkout: hidden inputs added through `woocommerce_after_checkout_billing_form` / `woocommerce_after_checkout_shipping_form`.
+- Classic checkout: one hidden input, `adra_aa_selection`, added to the form by our script. It holds JSON with both selections.
 - Block checkout: `setExtensionData( 'adra-address-autocomplete', … )` on the client. The server registers the schema with `woocommerce_store_api_register_endpoint_data` and saves it in `woocommerce_store_api_checkout_update_order_from_request`.
 - Gravity Forms: a hidden input per field (the pattern from GPAA `add_coord_input`).
+- WooCommerce's block checkout calls the provider's `search()` and `select()` without saying whether it's the billing or shipping address. The classic checkout passes it to `search()`. Where it's missing, we take it from the focused field (`shipping-address_1`).
 
 ## Plugin structure
 
@@ -136,7 +140,7 @@ Size: S = under a day, M = a few days, L = a week or more.
 | 2 | Settings page + Google loader + key check + webpack build | S | Done. Key from constant or option; Maps loads once, and the loader steps aside (and says so on the settings page) when another plugin loads it; a "Test key" button runs one real search from the browser and explains the usual setup mistakes. Checked in a real WordPress 7.1.3 + WooCommerce 11.2.1 site in Chromium, including a real Google response to an invalid key |
 | 3 | Gravity Forms | M | Done. Per-field toggle in the form editor; fills International and US Address fields; works across multi-page forms, save-and-continue and conditional logic; status saved to entry meta and shown on the entry screen. Checked in a real WordPress 7.1.3 + Gravity Forms 3.1.3.4 site in Chromium (17 checks), with Google's Places library replaced by a stand-in returning fixture data |
 | 4 | WooCommerce provider | M | Done. Provider appears in WooCommerce settings; fills classic checkout, block checkout and My Account with WooCommerce state codes. Checked with real Google in WordPress 7.1.3 + WooCommerce 11.2.1 (12 checks), and the Gravity Forms checks re-run with real Google (18) |
-| 5 | Address status + soft warning (classic, blocks, Gravity Forms) + order display | M | Correct status on test orders under HPOS and legacy storage; warning appears for `manual`/`modified` and never stops a second submit |
+| 5 | Address status + soft warning (classic, blocks, Gravity Forms) + order display | M | Done. Status recorded on classic and block checkout orders, under both HPOS and legacy storage, and shown on the order screen; one-time confirm on classic checkout, block checkout and Gravity Forms; setting to turn the warning off. Checked with real Google in WordPress 7.1.3 + WooCommerce 11.2.1 + Gravity Forms 3.1.3.4 (24 WooCommerce checks under each storage, 9 Gravity Forms, 2 for saved addresses) |
 | 6 | Admin order edit adapter | S–M | Billing and shipping fill on the order edit screen, including the state reload |
 | 7 | End-to-end tests + release pipeline | M | Playwright passes on GF, classic checkout, block checkout, My Account and admin, with a stubbed `google.maps`. Pushing a `v*` tag makes GitHub Actions build the zip (no dev files) and attach it to a release. A test site updates from that release through the Plugins screen. |
 

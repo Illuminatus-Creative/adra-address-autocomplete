@@ -50,11 +50,11 @@ final class Plugin {
 		}
 
 		if ( $this->requirements->gravity_forms_supported() ) {
-			( new Gravity_Forms_Integration( $loader ) )->register();
+			( new Gravity_Forms_Integration( $loader, $this->options ) )->register();
 		}
 
 		if ( $this->requirements->woocommerce_supported() ) {
-			( new WooCommerce_Integration( $loader ) )->register();
+			( new WooCommerce_Integration( $loader, $this->options ) )->register();
 		}
 	}
 

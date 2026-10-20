@@ -68,6 +68,20 @@ final class Status {
 	}
 
 	/**
+	 * Labels for the status values, for admin screens.
+	 *
+	 * @return array<string, string>
+	 */
+	public static function labels(): array {
+		return array(
+			self::VERIFIED => __( 'Verified: matches the selected suggestion', 'adra-address-autocomplete' ),
+			self::MODIFIED => __( 'Modified after selecting a suggestion', 'adra-address-autocomplete' ),
+			self::MANUAL   => __( 'Manual: no suggestion selected', 'adra-address-autocomplete' ),
+			self::UNKNOWN  => __( 'Unknown: another address provider was used', 'adra-address-autocomplete' ),
+		);
+	}
+
+	/**
 	 * Normalizes text so formatting-only differences don't count as edits: case, accents, repeated
 	 * whitespace and the punctuation people add or drop ("St." vs "St", "Apt #4").
 	 *

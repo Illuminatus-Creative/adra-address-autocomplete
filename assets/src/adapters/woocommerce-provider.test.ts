@@ -1,9 +1,13 @@
+// @vitest-environment jsdom
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 
 import type { PlaceData, Suggestion } from '../engine/types';
-import { createWooCommerceProvider } from './woocommerce-provider';
+import {
+	createWooCommerceProvider,
+	focusedAddressType,
+} from './woocommerce-provider';
 import type { WooCommerceStates } from './woocommerce-state';
 
 const fixtures = join(__dirname, '../../../tests/fixtures');
@@ -111,5 +115,64 @@ describe('WooCommerce provider', () => {
 		expect(await p.select('p1')).toBeNull();
 		expect(await p.search('x y z', 'US')).toEqual([]);
 		expect(log).toHaveBeenCalledTimes(2);
+	});
+});
+
+describe('WooCommerce provider selections', () => {
+	it('reports which address type a selection was for', async () => {
+		const onSelected = vi.fn();
+		const client = {
+			search: vi.fn(async () => [suggestion]),
+			details: vi.fn(async () => place('de-munich')),
+		};
+		const p = createWooCommerceProvider(
+			client,
+			{ providerId: 'adra-address-autocomplete', states },
+			onSelected
+		);
+
+		await p.search('marienpl', 'DE', 'shipping');
+		const address = await p.select('p1');
+
+		expect(onSelected).toHaveBeenCalledWith('shipping', {
+			placeId: 'ChIJh1XS1fR1nkcRM7A6ayJH48Q',
+			address,
+		});
+	});
+});
+
+describe('WooCommerce provider on the block checkout', () => {
+	it('takes the address type from the focused field, as the block checkout passes none', async () => {
+		document.body.innerHTML = '<input id="shipping-address_1">';
+		document.getElementById('shipping-address_1')!.focus();
+		const onSelected = vi.fn();
+		const p = createWooCommerceProvider(
+			{
+				search: vi.fn(async () => [suggestion]),
+				details: vi.fn(async () => place('de-munich')),
+			},
+			{ providerId: 'adra-address-autocomplete', states },
+			onSelected
+		);
+
+		await p.search('marienpl', 'DE');
+		document.body.replaceChildren();
+		await p.select('p1');
+
+		expect(onSelected).toHaveBeenCalledWith('shipping', expect.anything());
+	});
+
+	it('reads billing and shipping fields on both checkouts', () => {
+		document.body.innerHTML =
+			'<input id="billing_address_1"><input id="shipping-city"><input id="email">';
+
+		const types = ['billing_address_1', 'shipping-city', 'email'].map(
+			(id) => {
+				document.getElementById(id)!.focus();
+				return focusedAddressType();
+			}
+		);
+
+		expect(types).toEqual(['billing', 'shipping', '']);
 	});
 });

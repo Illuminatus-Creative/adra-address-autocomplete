@@ -8,7 +8,9 @@
 namespace Adra\AddressAutocomplete\WooCommerce;
 
 use Adra\AddressAutocomplete\Assets\Bundle;
+use Adra\AddressAutocomplete\Address\Warning;
 use Adra\AddressAutocomplete\Assets\Google_Loader;
+use Adra\AddressAutocomplete\Settings\Options;
 
 /**
  * Plugs Google Places into WooCommerce's address autocomplete framework (WooCommerce 10.3+).
@@ -21,12 +23,19 @@ final class Integration {
 	/** WooCommerce's shared script, present when its address autocomplete is turned on. */
 	private const WC_SCRIPT = 'wc-address-autocomplete-common';
 
+	/** Block checkout packages: its events, for the soft warning, and the cart and checkout stores. */
+	private const BLOCKS_SCRIPTS = array( 'wc-blocks-checkout-events', 'wc-blocks-data-store' );
+
 	/**
 	 * Creates the integration.
 	 *
-	 * @param Google_Loader $loader Google Maps loader.
+	 * @param Google_Loader $loader  Google Maps loader.
+	 * @param Options       $options Plugin settings.
 	 */
-	public function __construct( private Google_Loader $loader ) {}
+	public function __construct(
+		private Google_Loader $loader,
+		private Options $options,
+	) {}
 
 	/**
 	 * Registers hooks.
@@ -35,6 +44,12 @@ final class Integration {
 		add_filter( 'woocommerce_address_providers', array( $this, 'add_provider' ) );
 		// After WooCommerce enqueues its own scripts (priority 10).
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ), 20 );
+
+		( new Order_Status() )->register();
+
+		if ( is_admin() ) {
+			( new Order_Display() )->register();
+		}
 	}
 
 	/**
@@ -62,7 +77,17 @@ final class Integration {
 			return;
 		}
 
-		$handle = Bundle::register( 'woocommerce-provider', array( self::WC_SCRIPT ) );
+		$dependencies = array( self::WC_SCRIPT );
+
+		if ( has_block( 'woocommerce/checkout' ) ) {
+			foreach ( self::BLOCKS_SCRIPTS as $script ) {
+				if ( wp_script_is( $script, 'registered' ) ) {
+					$dependencies[] = $script;
+				}
+			}
+		}
+
+		$handle = Bundle::register( 'woocommerce-provider', $dependencies );
 
 		if ( null === $handle ) {
 			return;
@@ -72,8 +97,14 @@ final class Integration {
 			$handle,
 			'adraAaWooCommerce',
 			array(
-				'providerId' => Provider::ID,
-				'states'     => $this->states(),
+				'providerId'        => Provider::ID,
+				'states'            => $this->states(),
+				'softWarning'       => array(
+					'enabled' => $this->options->soft_warning_enabled(),
+					'message' => Warning::message(),
+				),
+				'classicInput'      => Order_Status::CLASSIC_INPUT,
+				'storeApiNamespace' => Order_Status::STORE_API_NAMESPACE,
 			)
 		);
 

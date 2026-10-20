@@ -57,6 +57,13 @@ final class Options {
 	}
 
 	/**
+	 * Whether to show the soft warning for addresses that don't match a selected suggestion. On by default.
+	 */
+	public function soft_warning_enabled(): bool {
+		return (bool) ( $this->stored['soft_warning'] ?? true );
+	}
+
+	/**
 	 * Cleans a pasted key: strips whitespace (pasting often adds a newline) and checks the characters
 	 * Google uses.
 	 *

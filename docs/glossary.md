@@ -19,6 +19,7 @@ One word per idea, in code, comments, UI text and docs. If a change needs a new 
 | **select** (a suggestion) | The person chooses a suggestion, by click, tap or keyboard. | pick, choose, click |
 | **place** | Google's record for a selected suggestion, fetched as *place details*. Identified by a **place ID**. | location (that's the lat/lng) |
 | **selected address** | The address filled in from the selected suggestion. | picked address, suggested address |
+| **selection** | The selected address plus its place ID, as the browser sends it with a submission (`{placeId, address}`). | choice, pick |
 | **submitted address** | The address in the order or entry when it's submitted. | final address, entered address |
 | **session** | Google's billing session: searches from the first keystroke until place details are fetched, sharing one session token. | — |
 

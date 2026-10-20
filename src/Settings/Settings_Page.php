@@ -77,6 +77,17 @@ final class Settings_Page {
 
 		add_settings_section( 'google', __( 'Google', 'adra-address-autocomplete' ), '__return_false', self::SLUG );
 
+		add_settings_section( 'addresses', __( 'Addresses', 'adra-address-autocomplete' ), '__return_false', self::SLUG );
+
+		add_settings_field(
+			'soft_warning',
+			__( 'Soft warning', 'adra-address-autocomplete' ),
+			array( $this, 'render_soft_warning_field' ),
+			self::SLUG,
+			'addresses',
+			array( 'label_for' => 'adra-aa-soft-warning' )
+		);
+
 		add_settings_field(
 			'google_api_key',
 			__( 'Google API key', 'adra-address-autocomplete' ),
@@ -109,7 +120,10 @@ final class Settings_Page {
 			$key = $previous;
 		}
 
-		return array( 'google_api_key' => $key );
+		return array(
+			'google_api_key' => $key,
+			'soft_warning'   => ! empty( $input['soft_warning'] ),
+		);
 	}
 
 	/**
@@ -140,6 +154,19 @@ final class Settings_Page {
 		$url = admin_url( 'options-general.php?page=' . self::SLUG );
 
 		return array( 'settings' => '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Settings', 'adra-address-autocomplete' ) . '</a>' ) + $links;
+	}
+
+	/**
+	 * Prints the soft warning checkbox.
+	 */
+	public function render_soft_warning_field(): void {
+		printf(
+			'<input type="hidden" name="%1$s[soft_warning]" value="0"><label><input type="checkbox" id="adra-aa-soft-warning" name="%1$s[soft_warning]" value="1" %2$s> %3$s</label>',
+			esc_attr( Options::OPTION ),
+			checked( $this->options->soft_warning_enabled(), true, false ),
+			esc_html__( 'Ask people to check an address that didn’t come from a suggestion, once, before the order or form goes through', 'adra-address-autocomplete' )
+		);
+		printf( '<p class="description">%s</p>', esc_html( \Adra\AddressAutocomplete\Address\Warning::message() ) );
 	}
 
 	/**

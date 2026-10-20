@@ -7,9 +7,12 @@
 
 namespace Adra\AddressAutocomplete\Gravity_Forms;
 
+use Adra\AddressAutocomplete\Address\Selection;
 use Adra\AddressAutocomplete\Address\Status;
+use Adra\AddressAutocomplete\Address\Warning;
 use Adra\AddressAutocomplete\Assets\Bundle;
 use Adra\AddressAutocomplete\Assets\Google_Loader;
+use Adra\AddressAutocomplete\Settings\Options;
 use GF_Field;
 use GFFormDisplay;
 use GFFormsModel;
@@ -29,6 +32,9 @@ final class Integration {
 	/** Prefix of the hidden input holding the selected address. */
 	public const SELECTED_INPUT = 'adra_aa_selected_';
 
+	/** Prefix of the hidden input recording an address the person confirmed after the soft warning. */
+	public const CONFIRMED_INPUT = 'adra_aa_confirmed_';
+
 	/** Prefix of the entry meta keys. */
 	public const STATUS_META  = 'adra_aa_status_';
 	public const CHANGED_META = 'adra_aa_changed_';
@@ -45,11 +51,22 @@ final class Integration {
 	);
 
 	/**
+	 * Keys of addresses warned about in this request, by field ID, to render for the next submit.
+	 *
+	 * @var array<int, string>
+	 */
+	private array $warned = array();
+
+	/**
 	 * Creates the integration.
 	 *
-	 * @param Google_Loader $loader Google Maps loader.
+	 * @param Google_Loader $loader  Google Maps loader.
+	 * @param Options       $options Plugin settings.
 	 */
-	public function __construct( private Google_Loader $loader ) {}
+	public function __construct(
+		private Google_Loader $loader,
+		private Options $options,
+	) {}
 
 	/**
 	 * Registers hooks.
@@ -63,6 +80,10 @@ final class Integration {
 		add_action( 'gform_register_init_scripts', array( $this, 'register_init_scripts' ) );
 		add_filter( 'gform_field_content', array( $this, 'add_selected_input' ), 10, 2 );
 		add_filter( 'gform_submission_values_pre_save', array( $this, 'keep_selected_in_draft' ), 10, 2 );
+
+		if ( $this->options->soft_warning_enabled() ) {
+			add_filter( 'gform_validation', array( $this, 'soft_warning' ) );
+		}
 
 		// Before feed add-ons (priority 10), so they can use the status.
 		add_filter( 'gform_entry_post_save', array( $this, 'save_status' ), 5, 2 );
@@ -240,12 +261,16 @@ final class Integration {
 			return (string) $content;
 		}
 
-		$name = self::SELECTED_INPUT . (int) $field->id;
+		$id        = (int) $field->id;
+		$name      = self::SELECTED_INPUT . $id;
+		$confirmed = $this->warned[ $id ] ?? $this->posted( self::CONFIRMED_INPUT . $id );
 
 		return $content . sprintf(
-			'<input type="hidden" name="%s" class="gform_hidden adra-aa-selected" value="%s">',
+			'<input type="hidden" name="%s" class="gform_hidden adra-aa-selected" value="%s"><input type="hidden" name="%s" class="gform_hidden" value="%s">',
 			esc_attr( $name ),
-			esc_attr( $this->submitted_or_draft_value( $name ) )
+			esc_attr( $this->submitted_or_draft_value( $name ) ),
+			esc_attr( self::CONFIRMED_INPUT . $id ),
+			esc_attr( $confirmed )
 		);
 	}
 
@@ -279,6 +304,68 @@ final class Integration {
 		$value      = $submission['submitted_values'][ $name ] ?? '';
 
 		return is_string( $value ) ? $value : '';
+	}
+
+	/**
+	 * A posted text value, or an empty string.
+	 *
+	 * @param string $name Input name.
+	 */
+	private function posted( string $name ): string {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Gravity Forms verifies the submission.
+		return isset( $_POST[ $name ] ) ? sanitize_text_field( wp_unslash( $_POST[ $name ] ) ) : '';
+	}
+
+	/**
+	 * The one-time confirm: the first submit of an address that doesn't match a selected suggestion
+	 * fails validation with the soft warning; submitting the same address again goes through.
+	 *
+	 * @param array{is_valid: bool, form: array<string, mixed>} $validation_result Validation result.
+	 * @return array{is_valid: bool, form: array<string, mixed>}
+	 */
+	public function soft_warning( $validation_result ): array {
+		$form = $validation_result['form'];
+		$page = class_exists( GFFormDisplay::class ) ? (int) GFFormDisplay::get_source_page( (int) $form['id'] ) : 0;
+
+		foreach ( self::enabled_fields( $form ) as $field ) {
+			// Other errors on the field come first; fields on other pages are checked there.
+			if (
+				$field->failed_validation
+				|| ( $page && (int) rgobj( $field, 'pageNumber' ) !== $page )
+				|| GFFormsModel::is_field_hidden( $form, $field, array() )
+			) {
+				continue;
+			}
+
+			$id      = (int) $field->id;
+			$address = array();
+
+			foreach ( self::INPUTS as $name => $number ) {
+				$address[ $name ] = $this->posted( 'input_' . $id . '_' . $number );
+			}
+
+			if ( '' === $address['address_1'] ) {
+				continue;
+			}
+
+			$selected = Selection::decode( $this->posted( self::SELECTED_INPUT . $id ) );
+			$status   = Status::compare( $selected['address'] ?? null, $address )['status'];
+			$key      = Warning::key( $address );
+
+			if ( Status::VERIFIED === $status || hash_equals( $key, $this->posted( self::CONFIRMED_INPUT . $id ) ) ) {
+				continue;
+			}
+
+			$field->failed_validation  = true;
+			$field->validation_message = Warning::message();
+			$this->warned[ $id ]       = $key;
+
+			$validation_result['is_valid'] = false;
+		}
+
+		$validation_result['form'] = $form;
+
+		return $validation_result;
 	}
 
 	/**
@@ -318,9 +405,9 @@ final class Integration {
 
 			$id   = (int) $field->id;
 			$name = self::SELECTED_INPUT . $id;
-			// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Gravity Forms verifies the submission; decode_selected() reduces the value to known, sanitized fields.
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Gravity Forms verifies the submission; Selection::decode() reduces the value to known, sanitized fields.
 			$raw      = isset( $_POST[ $name ] ) ? wp_unslash( $_POST[ $name ] ) : '';
-			$selected = self::decode_selected( $raw );
+			$selected = Selection::decode( $raw );
 
 			$submitted = array();
 
@@ -346,54 +433,6 @@ final class Integration {
 	}
 
 	/**
-	 * Decodes the selected-address JSON posted by the adapter, keeping only known string fields.
-	 *
-	 * The value comes from the browser, so a determined user could forge a "verified" status. It
-	 * is meant to catch mistakes, not fraud.
-	 *
-	 * @param mixed $raw Posted value.
-	 * @return array{placeId: string, address: array<string, string>}|null
-	 */
-	public static function decode_selected( $raw ): ?array {
-		if ( ! is_string( $raw ) || '' === $raw || strlen( $raw ) > 4000 ) {
-			return null;
-		}
-
-		$data = json_decode( $raw, true );
-
-		if ( ! is_array( $data ) || ! is_array( $data['address'] ?? null ) ) {
-			return null;
-		}
-
-		$address = array();
-
-		foreach ( array_keys( self::INPUTS ) as $name ) {
-			$value            = $data['address'][ $name ] ?? '';
-			$address[ $name ] = is_string( $value ) ? sanitize_text_field( $value ) : '';
-		}
-
-		$place_id = $data['placeId'] ?? '';
-
-		return array(
-			'placeId' => is_string( $place_id ) ? (string) preg_replace( '/[^A-Za-z0-9_-]/', '', $place_id ) : '',
-			'address' => $address,
-		);
-	}
-
-	/**
-	 * Labels for the status values.
-	 *
-	 * @return array<string, string>
-	 */
-	public static function status_labels(): array {
-		return array(
-			Status::VERIFIED => __( 'Verified: matches the selected suggestion', 'adra-address-autocomplete' ),
-			Status::MODIFIED => __( 'Modified after selecting a suggestion', 'adra-address-autocomplete' ),
-			Status::MANUAL   => __( 'Manual: no suggestion selected', 'adra-address-autocomplete' ),
-		);
-	}
-
-	/**
 	 * Registers the status as entry meta, so it can be shown in the entry list, filtered on, and
 	 * used in conditional logic.
 	 *
@@ -404,7 +443,7 @@ final class Integration {
 	public function register_entry_meta( $entry_meta, $form_id ): array {
 		$choices = array();
 
-		foreach ( self::status_labels() as $value => $label ) {
+		foreach ( array_intersect_key( Status::labels(), array_flip( array( Status::VERIFIED, Status::MODIFIED, Status::MANUAL ) ) ) as $value => $label ) {
 			$choices[] = array(
 				'value' => $value,
 				'text'  => $label,
@@ -454,7 +493,7 @@ final class Integration {
 	 * @param array{entry: array<string, mixed>, form: array<string, mixed>} $args Entry and form.
 	 */
 	public function render_meta_box( $args ): void {
-		$labels = self::status_labels();
+		$labels = Status::labels();
 
 		echo '<ul>';
 
