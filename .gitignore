@@ -4,3 +4,7 @@
 /.phpunit.result.cache
 *.zip
 .DS_Store
+/dist/
+/.e2e/
+/test-results/
+/playwright-report/

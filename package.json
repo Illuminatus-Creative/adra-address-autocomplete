@@ -11,12 +11,15 @@
 	"scripts": {
 		"build": "wp-scripts build",
 		"start": "wp-scripts start",
-		"lint:js": "wp-scripts lint-js assets/src bin vitest.config.mts webpack.config.js",
-		"format": "wp-scripts format assets/src bin vitest.config.mts",
+		"lint:js": "wp-scripts lint-js assets/src bin tests/e2e playwright.config.ts vitest.config.mts webpack.config.js",
+		"format": "wp-scripts format assets/src bin tests/e2e playwright.config.ts vitest.config.mts",
 		"typecheck": "tsc --noEmit",
-		"test:js": "wp-scripts test-unit-js"
+		"test:js": "wp-scripts test-unit-js",
+		"test:e2e": "playwright test",
+		"build:zip": "bin/build-zip.sh"
 	},
 	"devDependencies": {
+		"@playwright/test": "1.63.0",
 		"@types/google.maps": "^3.66.7",
 		"@wordpress/eslint-plugin": "^27.1.0",
 		"@wordpress/i18n": "^6.30.0",

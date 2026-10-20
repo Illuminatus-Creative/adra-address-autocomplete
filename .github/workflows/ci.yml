@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   pull_request:
+  # The release workflow runs these checks before publishing.
+  workflow_call:
 
 permissions:
   contents: read
@@ -45,3 +47,60 @@ jobs:
       - run: npm run typecheck
       - run: npm run test:js -- --run
       - run: npm run build
+
+  e2e:
+    name: End-to-end
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          extensions: pdo_sqlite, sqlite3
+          tools: composer:v2
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: composer install --no-interaction --no-progress
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Build the test site
+        run: bin/e2e-env.sh
+        env:
+          # Optional repository secret: a URL to a Gravity Forms zip. Without it, the Gravity
+          # Forms tests are skipped.
+          GRAVITY_FORMS_ZIP: ${{ secrets.GRAVITY_FORMS_ZIP_URL }}
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+
+  package:
+    name: Release zip
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
+          tools: composer:v2
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: bin/build-zip.sh
+      - uses: actions/upload-artifact@v7
+        with:
+          name: adra-address-autocomplete
+          path: dist/adra-address-autocomplete.zip
+          retention-days: 7

@@ -222,8 +222,8 @@ final class Integration {
 	 */
 	private function field_config( array $form, GF_Field $field ): array {
 		$region_codes = array(
-			'us'       => array( 'us' ),
-			'canadian' => array( 'ca' ),
+			'us'       => array( 'US' ),
+			'canadian' => array( 'CA' ),
 		);
 
 		$config = array(
