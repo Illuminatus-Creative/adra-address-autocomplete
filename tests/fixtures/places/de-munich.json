@@ -1,0 +1,93 @@
+{
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
+	"place": {
+		"id": "ChIJh1XS1fR1nkcRM7A6ayJH48Q",
+		"formattedAddress": "Marienplatz 1, 80331 München-Altstadt-Lehel, Germany",
+		"adrFormatAddress": "<span class=\"street-address\">Marienplatz 1</span>, <span class=\"postal-code\">80331</span> <span class=\"locality\">München</span>-<span class=\"region\">Altstadt-Lehel</span>, <span class=\"country-name\">Germany</span>",
+		"addressComponents": [
+			{
+				"longText": "1",
+				"shortText": "1",
+				"types": [
+					"street_number"
+				]
+			},
+			{
+				"longText": "Marienplatz",
+				"shortText": "Marienplatz",
+				"types": [
+					"route"
+				]
+			},
+			{
+				"longText": "Altstadt-Lehel",
+				"shortText": "Altstadt-Lehel",
+				"types": [
+					"sublocality_level_1",
+					"sublocality",
+					"political"
+				]
+			},
+			{
+				"longText": "München",
+				"shortText": "München",
+				"types": [
+					"locality",
+					"political"
+				]
+			},
+			{
+				"longText": "Kreisfreie Stadt München",
+				"shortText": "Kreisfreie Stadt München",
+				"types": [
+					"administrative_area_level_3",
+					"political"
+				]
+			},
+			{
+				"longText": "Oberbayern",
+				"shortText": "Oberbayern",
+				"types": [
+					"administrative_area_level_2",
+					"political"
+				]
+			},
+			{
+				"longText": "Bayern",
+				"shortText": "BY",
+				"types": [
+					"administrative_area_level_1",
+					"political"
+				]
+			},
+			{
+				"longText": "Germany",
+				"shortText": "DE",
+				"types": [
+					"country",
+					"political"
+				]
+			},
+			{
+				"longText": "80331",
+				"shortText": "80331",
+				"types": [
+					"postal_code"
+				]
+			}
+		],
+		"location": {
+			"lat": 48.1374259,
+			"lng": 11.574717099999999
+		}
+	},
+	"expected": {
+		"address_1": "Marienplatz 1",
+		"address_2": "",
+		"city": "München",
+		"postcode": "80331",
+		"region": "Bayern",
+		"country": "DE",
+		"wcState": "DE-BY"
+	}
+}

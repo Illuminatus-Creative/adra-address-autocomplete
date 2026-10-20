@@ -1,0 +1,75 @@
+{
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
+	"place": {
+		"id": "ChIJnTV5vwUZ2jERU9Z7dKdLFL0",
+		"formattedAddress": "10 Bayfront Ave, Marina Bay Sands, Singapore 018956",
+		"adrFormatAddress": "<span class=\"street-address\">10 Bayfront Ave</span>, Marina Bay Sands, <span class=\"country-name\">Singapore</span> <span class=\"postal-code\">018956</span>",
+		"addressComponents": [
+			{
+				"longText": "Marina Bay Sands",
+				"shortText": "Marina Bay Sands",
+				"types": [
+					"premise"
+				]
+			},
+			{
+				"longText": "10",
+				"shortText": "10",
+				"types": [
+					"street_number"
+				]
+			},
+			{
+				"longText": "Bayfront Avenue",
+				"shortText": "Bayfront Ave",
+				"types": [
+					"route"
+				]
+			},
+			{
+				"longText": "Downtown Core",
+				"shortText": "Downtown Core",
+				"types": [
+					"neighborhood",
+					"political"
+				]
+			},
+			{
+				"longText": "Singapore",
+				"shortText": "Singapore",
+				"types": [
+					"locality",
+					"political"
+				]
+			},
+			{
+				"longText": "Singapore",
+				"shortText": "SG",
+				"types": [
+					"country",
+					"political"
+				]
+			},
+			{
+				"longText": "018956",
+				"shortText": "018956",
+				"types": [
+					"postal_code"
+				]
+			}
+		],
+		"location": {
+			"lat": 1.2830632,
+			"lng": 103.85799650000001
+		}
+	},
+	"expected": {
+		"address_1": "10 Bayfront Ave",
+		"address_2": "",
+		"city": "Singapore",
+		"postcode": "018956",
+		"region": "",
+		"country": "SG",
+		"wcState": ""
+	}
+}

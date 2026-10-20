@@ -60,6 +60,13 @@ add_action(
 add_action(
 	'plugins_loaded',
 	static function () {
-		( new \Adra\AddressAutocomplete\Plugin( \Adra\AddressAutocomplete\Requirements::from_environment() ) )->register();
+		// Before the requirement checks, so a site can still update to a fixed version.
+		\Adra\AddressAutocomplete\Updates\Updater::register( ADRA_AA_FILE );
+
+		$plugin = new \Adra\AddressAutocomplete\Plugin(
+			\Adra\AddressAutocomplete\Requirements::from_environment(),
+			\Adra\AddressAutocomplete\Settings\Options::from_wordpress()
+		);
+		$plugin->register();
 	}
 );

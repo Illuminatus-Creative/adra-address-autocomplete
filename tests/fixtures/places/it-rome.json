@@ -1,0 +1,84 @@
+{
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
+	"place": {
+		"id": "ChIJO6r6c7dhLxMRHnqX61cWOrc",
+		"formattedAddress": "P.za del Colosseo, 1, 00184 Roma RM, Italy",
+		"adrFormatAddress": "<span class=\"street-address\">P.za del Colosseo, 1</span>, <span class=\"postal-code\">00184</span> <span class=\"locality\">Roma</span> <span class=\"region\">RM</span>, <span class=\"country-name\">Italy</span>",
+		"addressComponents": [
+			{
+				"longText": "1",
+				"shortText": "1",
+				"types": [
+					"street_number"
+				]
+			},
+			{
+				"longText": "Piazza del Colosseo",
+				"shortText": "P.za del Colosseo",
+				"types": [
+					"route"
+				]
+			},
+			{
+				"longText": "Roma",
+				"shortText": "Roma",
+				"types": [
+					"locality",
+					"political"
+				]
+			},
+			{
+				"longText": "Roma",
+				"shortText": "Roma",
+				"types": [
+					"administrative_area_level_3",
+					"political"
+				]
+			},
+			{
+				"longText": "Città metropolitana di Roma Capitale",
+				"shortText": "RM",
+				"types": [
+					"administrative_area_level_2",
+					"political"
+				]
+			},
+			{
+				"longText": "Lazio",
+				"shortText": "Lazio",
+				"types": [
+					"administrative_area_level_1",
+					"political"
+				]
+			},
+			{
+				"longText": "Italy",
+				"shortText": "IT",
+				"types": [
+					"country",
+					"political"
+				]
+			},
+			{
+				"longText": "00184",
+				"shortText": "00184",
+				"types": [
+					"postal_code"
+				]
+			}
+		],
+		"location": {
+			"lat": 41.8899689,
+			"lng": 12.4942703
+		}
+	},
+	"expected": {
+		"address_1": "P.za del Colosseo, 1",
+		"address_2": "",
+		"city": "Roma",
+		"postcode": "00184",
+		"region": "Città metropolitana di Roma Capitale",
+		"country": "IT",
+		"wcState": "RM"
+	}
+}

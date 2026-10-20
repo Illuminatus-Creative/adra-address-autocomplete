@@ -1,14 +1,27 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "skipLibCheck": true
-  },
-  "include": ["assets/src"]
+	"compilerOptions": {
+		"target": "ES2022",
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"lib": [
+			"ES2022",
+			"DOM",
+			"DOM.Iterable"
+		],
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"skipLibCheck": true,
+		"types": [
+			"google.maps",
+			"node"
+		]
+	},
+	"include": [
+		"assets/src",
+		"tests/e2e",
+		"playwright.config.ts",
+		"vitest.config.mts"
+	]
 }

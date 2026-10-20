@@ -1,0 +1,69 @@
+{
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
+	"place": {
+		"id": "ChIJ4QEl5uFv5kcR02MTNOjmEEA",
+		"formattedAddress": "Av. Gustave Eiffel, 75007 Paris, France",
+		"adrFormatAddress": "<span class=\"street-address\">Av. Gustave Eiffel</span>, <span class=\"postal-code\">75007</span> <span class=\"locality\">Paris</span>, <span class=\"country-name\">France</span>",
+		"addressComponents": [
+			{
+				"longText": "Avenue Gustave Eiffel",
+				"shortText": "Av. Gustave Eiffel",
+				"types": [
+					"route"
+				]
+			},
+			{
+				"longText": "Paris",
+				"shortText": "Paris",
+				"types": [
+					"locality",
+					"political"
+				]
+			},
+			{
+				"longText": "Paris",
+				"shortText": "Paris",
+				"types": [
+					"administrative_area_level_2",
+					"political"
+				]
+			},
+			{
+				"longText": "Île-de-France",
+				"shortText": "IDF",
+				"types": [
+					"administrative_area_level_1",
+					"political"
+				]
+			},
+			{
+				"longText": "France",
+				"shortText": "FR",
+				"types": [
+					"country",
+					"political"
+				]
+			},
+			{
+				"longText": "75007",
+				"shortText": "75007",
+				"types": [
+					"postal_code"
+				]
+			}
+		],
+		"location": {
+			"lat": 48.8578065,
+			"lng": 2.295188
+		}
+	},
+	"expected": {
+		"address_1": "Av. Gustave Eiffel",
+		"address_2": "",
+		"city": "Paris",
+		"postcode": "75007",
+		"region": "Île-de-France",
+		"country": "FR",
+		"wcState": ""
+	}
+}

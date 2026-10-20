@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -111,5 +113,29 @@ describe('compareAddress', () => {
 			compareAddress(portugal, { ...portugal, postcode: '1100-999' })
 				.status
 		).toBe('modified');
+	});
+});
+
+describe('shared cases (also run against src/Address/Status.php)', () => {
+	interface SharedCase {
+		name: string;
+		selected?: Address;
+		submitted: Partial<Address>;
+		expected: { status: string; changed: string[] };
+	}
+
+	const shared = JSON.parse(
+		readFileSync(
+			join(__dirname, '../../../tests/fixtures/address-match-cases.json'),
+			'utf8'
+		)
+	) as { selected: Address; cases: SharedCase[] };
+
+	it.each(shared.cases)('$name', ({ selected: own, submitted, expected }) => {
+		const before = own ?? shared.selected;
+
+		expect(compareAddress(before, { ...before, ...submitted })).toEqual(
+			expected
+		);
 	});
 });

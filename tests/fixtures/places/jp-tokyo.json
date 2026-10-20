@@ -1,0 +1,95 @@
+{
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
+	"place": {
+		"id": "ChIJcx2EkL2LGGARv0gV3HSFqQo",
+		"formattedAddress": "Tokyo Tower, 4-chōme-2-8 Shibakōen, Minato City, Tokyo 105-0011, Japan",
+		"adrFormatAddress": "<span class=\"street-address\">Tokyo Tower, 4-chōme-2-8 Shibakōen, Minato City</span>, <span class=\"region\">Tokyo</span> <span class=\"postal-code\">105-0011</span>, <span class=\"country-name\">Japan</span>",
+		"addressComponents": [
+			{
+				"longText": "Tokyo Tower",
+				"shortText": "Tokyo Tower",
+				"types": [
+					"premise"
+				]
+			},
+			{
+				"longText": "8",
+				"shortText": "8",
+				"types": [
+					"premise"
+				]
+			},
+			{
+				"longText": "2",
+				"shortText": "2",
+				"types": [
+					"sublocality_level_4",
+					"sublocality",
+					"political"
+				]
+			},
+			{
+				"longText": "4-chōme",
+				"shortText": "4-chōme",
+				"types": [
+					"sublocality_level_3",
+					"sublocality",
+					"political"
+				]
+			},
+			{
+				"longText": "Shibakōen",
+				"shortText": "Shibakōen",
+				"types": [
+					"sublocality_level_2",
+					"sublocality",
+					"political"
+				]
+			},
+			{
+				"longText": "Minato City",
+				"shortText": "Minato City",
+				"types": [
+					"locality",
+					"political"
+				]
+			},
+			{
+				"longText": "Tokyo",
+				"shortText": "Tokyo",
+				"types": [
+					"administrative_area_level_1",
+					"political"
+				]
+			},
+			{
+				"longText": "Japan",
+				"shortText": "JP",
+				"types": [
+					"country",
+					"political"
+				]
+			},
+			{
+				"longText": "105-0011",
+				"shortText": "105-0011",
+				"types": [
+					"postal_code"
+				]
+			}
+		],
+		"location": {
+			"lat": 35.6585469,
+			"lng": 139.7456622
+		}
+	},
+	"expected": {
+		"address_1": "Tokyo Tower, 4-chōme-2-8 Shibakōen, Minato City",
+		"address_2": "",
+		"city": "Minato City",
+		"postcode": "105-0011",
+		"region": "Tokyo",
+		"country": "JP",
+		"wcState": "JP13"
+	}
+}

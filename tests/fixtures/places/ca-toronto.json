@@ -1,0 +1,93 @@
+{
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
+	"place": {
+		"id": "ChIJo4QiitY0K4gRUR56gCqdkTQ",
+		"formattedAddress": "290 Bremner Blvd, Toronto, ON M5V 3L9, Canada",
+		"adrFormatAddress": "<span class=\"street-address\">290 Bremner Blvd</span>, <span class=\"locality\">Toronto</span>, <span class=\"region\">ON</span> <span class=\"postal-code\">M5V 3L9</span>, <span class=\"country-name\">Canada</span>",
+		"addressComponents": [
+			{
+				"longText": "290",
+				"shortText": "290",
+				"types": [
+					"street_number"
+				]
+			},
+			{
+				"longText": "Bremner Boulevard",
+				"shortText": "Bremner Blvd",
+				"types": [
+					"route"
+				]
+			},
+			{
+				"longText": "Old Toronto",
+				"shortText": "Old Toronto",
+				"types": [
+					"sublocality_level_1",
+					"sublocality",
+					"political"
+				]
+			},
+			{
+				"longText": "Toronto",
+				"shortText": "Toronto",
+				"types": [
+					"locality",
+					"political"
+				]
+			},
+			{
+				"longText": "Toronto",
+				"shortText": "Toronto",
+				"types": [
+					"administrative_area_level_3",
+					"political"
+				]
+			},
+			{
+				"longText": "Toronto",
+				"shortText": "Toronto",
+				"types": [
+					"administrative_area_level_2",
+					"political"
+				]
+			},
+			{
+				"longText": "Ontario",
+				"shortText": "ON",
+				"types": [
+					"administrative_area_level_1",
+					"political"
+				]
+			},
+			{
+				"longText": "Canada",
+				"shortText": "CA",
+				"types": [
+					"country",
+					"political"
+				]
+			},
+			{
+				"longText": "M5V 3L9",
+				"shortText": "M5V 3L9",
+				"types": [
+					"postal_code"
+				]
+			}
+		],
+		"location": {
+			"lat": 43.642552099999996,
+			"lng": -79.3870943
+		}
+	},
+	"expected": {
+		"address_1": "290 Bremner Blvd",
+		"address_2": "",
+		"city": "Toronto",
+		"postcode": "M5V 3L9",
+		"region": "Ontario",
+		"country": "CA",
+		"wcState": "ON"
+	}
+}

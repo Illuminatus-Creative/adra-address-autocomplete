@@ -1,0 +1,85 @@
+{
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
+	"place": {
+		"id": "ChIJ5Ra7we4JxkcR3XQ7J4u5EuI",
+		"formattedAddress": "Museumstraat 1, 1071 XX Amsterdam, Netherlands",
+		"adrFormatAddress": "<span class=\"street-address\">Museumstraat 1</span>, <span class=\"postal-code\">1071 XX</span> <span class=\"locality\">Amsterdam</span>, <span class=\"country-name\">Netherlands</span>",
+		"addressComponents": [
+			{
+				"longText": "1",
+				"shortText": "1",
+				"types": [
+					"street_number"
+				]
+			},
+			{
+				"longText": "Museumstraat",
+				"shortText": "Museumstraat",
+				"types": [
+					"route"
+				]
+			},
+			{
+				"longText": "Amsterdam-Zuid",
+				"shortText": "Amsterdam-Zuid",
+				"types": [
+					"sublocality_level_1",
+					"sublocality",
+					"political"
+				]
+			},
+			{
+				"longText": "Amsterdam",
+				"shortText": "Amsterdam",
+				"types": [
+					"locality",
+					"political"
+				]
+			},
+			{
+				"longText": "Amsterdam",
+				"shortText": "Amsterdam",
+				"types": [
+					"administrative_area_level_2",
+					"political"
+				]
+			},
+			{
+				"longText": "Noord-Holland",
+				"shortText": "NH",
+				"types": [
+					"administrative_area_level_1",
+					"political"
+				]
+			},
+			{
+				"longText": "Netherlands",
+				"shortText": "NL",
+				"types": [
+					"country",
+					"political"
+				]
+			},
+			{
+				"longText": "1071 XX",
+				"shortText": "1071 XX",
+				"types": [
+					"postal_code"
+				]
+			}
+		],
+		"location": {
+			"lat": 52.3599976,
+			"lng": 4.8852188
+		}
+	},
+	"expected": {
+		"address_1": "Museumstraat 1",
+		"address_2": "",
+		"city": "Amsterdam",
+		"postcode": "1071 XX",
+		"region": "Noord-Holland",
+		"country": "NL",
+		"wcState": ""
+	}
+}

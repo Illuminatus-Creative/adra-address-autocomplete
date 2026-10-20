@@ -1,7 +1,8 @@
 /**
- * Decides whether a submitted address is still the one picked from a suggestion.
+ * Decides whether the submitted address still matches the selected address.
  *
- * The server-side status check must apply the same rules; keep them in sync.
+ * Mirrors src/Address/Status.php. Both are tested against
+ * tests/fixtures/address-match-cases.json; change them together.
  */
 
 export interface Address {
@@ -58,28 +59,29 @@ export function normalizePostcode(value: string): string {
 	return value.replace(/[\s-]/g, '').toUpperCase();
 }
 
-function postcodesMatch(
-	selected: string,
-	submitted: string,
-	country: string
-): boolean {
+/*
+ * Adding or removing a US ZIP+4 extension isn't an edit (Google returns either form); changing
+ * it is. Keyed on
+ * the postcode's shape, not the country, because forms store the country as a code or a name.
+ */
+function postcodesMatch(selected: string, submitted: string): boolean {
 	const a = normalizePostcode(selected);
 	const b = normalizePostcode(submitted);
+	const zip = /^(\d{5})(\d{4})?$/;
+	const zipA = zip.exec(a);
+	const zipB = zip.exec(b);
 
-	if (a === b) {
-		return true;
-	}
-
-	// Google returns 5-digit ZIPs; a customer adding the +4 extension hasn't changed the address.
-	if (country.toUpperCase() === 'US') {
-		return a.slice(0, 5) === b.slice(0, 5) && /^\d{5}$/.test(a.slice(0, 5));
-	}
-
-	return false;
+	return (
+		a === b ||
+		(!!zipA &&
+			!!zipB &&
+			zipA[1] === zipB[1] &&
+			(!zipA[2] || !zipB[2] || zipA[2] === zipB[2]))
+	);
 }
 
 /**
- * Compares the address picked from a suggestion with the one being submitted.
+ * Compares the selected address with the submitted address.
  *
  * A field the suggestion left empty can be filled in freely, since Google doesn't return
  * every component for every country.
@@ -100,7 +102,7 @@ export function compareAddress(
 		}
 
 		if (field === 'postcode') {
-			return !postcodesMatch(before, after, selected.country);
+			return !postcodesMatch(before, after);
 		}
 
 		return normalizeText(before) !== normalizeText(after);

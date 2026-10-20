@@ -1,0 +1,85 @@
+{
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
+	"place": {
+		"id": "ChIJ0XnT1MKipBIRVdDC8KJ5MN4",
+		"formattedAddress": "Carrer de Mallorca, 401, Eixample, 08013 Barcelona, Spain",
+		"adrFormatAddress": "<span class=\"street-address\">Carrer de Mallorca, 401</span>, <span class=\"extended-address\">Eixample</span>, <span class=\"postal-code\">08013</span> <span class=\"locality\">Barcelona</span>, <span class=\"country-name\">Spain</span>",
+		"addressComponents": [
+			{
+				"longText": "401",
+				"shortText": "401",
+				"types": [
+					"street_number"
+				]
+			},
+			{
+				"longText": "Carrer de Mallorca",
+				"shortText": "Carrer de Mallorca",
+				"types": [
+					"route"
+				]
+			},
+			{
+				"longText": "Eixample",
+				"shortText": "Eixample",
+				"types": [
+					"sublocality_level_1",
+					"sublocality",
+					"political"
+				]
+			},
+			{
+				"longText": "Barcelona",
+				"shortText": "Barcelona",
+				"types": [
+					"locality",
+					"political"
+				]
+			},
+			{
+				"longText": "Barcelona",
+				"shortText": "B",
+				"types": [
+					"administrative_area_level_2",
+					"political"
+				]
+			},
+			{
+				"longText": "Catalunya",
+				"shortText": "CT",
+				"types": [
+					"administrative_area_level_1",
+					"political"
+				]
+			},
+			{
+				"longText": "Spain",
+				"shortText": "ES",
+				"types": [
+					"country",
+					"political"
+				]
+			},
+			{
+				"longText": "08013",
+				"shortText": "08013",
+				"types": [
+					"postal_code"
+				]
+			}
+		],
+		"location": {
+			"lat": 41.403633400000004,
+			"lng": 2.1743547999999997
+		}
+	},
+	"expected": {
+		"address_1": "Carrer de Mallorca, 401",
+		"address_2": "Eixample",
+		"city": "Barcelona",
+		"postcode": "08013",
+		"region": "",
+		"country": "ES",
+		"wcState": "B"
+	}
+}

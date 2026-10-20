@@ -1,0 +1,70 @@
+{
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
+	"place": {
+		"id": "ChIJ56_fi2auEmsRdpMMZhsxJew",
+		"formattedAddress": "Bennelong Point, Sydney NSW 2000, Australia",
+		"adrFormatAddress": "Bennelong Point, <span class=\"locality\">Sydney</span> <span class=\"region\">NSW</span> <span class=\"postal-code\">2000</span>, <span class=\"country-name\">Australia</span>",
+		"addressComponents": [
+			{
+				"longText": "Bennelong Point",
+				"shortText": "Bennelong Point",
+				"types": [
+					"natural_feature",
+					"establishment"
+				]
+			},
+			{
+				"longText": "Sydney",
+				"shortText": "Sydney",
+				"types": [
+					"locality",
+					"political"
+				]
+			},
+			{
+				"longText": "City of Sydney",
+				"shortText": "City of Sydney",
+				"types": [
+					"administrative_area_level_2",
+					"political"
+				]
+			},
+			{
+				"longText": "New South Wales",
+				"shortText": "NSW",
+				"types": [
+					"administrative_area_level_1",
+					"political"
+				]
+			},
+			{
+				"longText": "Australia",
+				"shortText": "AU",
+				"types": [
+					"country",
+					"political"
+				]
+			},
+			{
+				"longText": "2000",
+				"shortText": "2000",
+				"types": [
+					"postal_code"
+				]
+			}
+		],
+		"location": {
+			"lat": -33.8565361,
+			"lng": 151.2149964
+		}
+	},
+	"expected": {
+		"address_1": "Bennelong Point",
+		"address_2": "",
+		"city": "Sydney",
+		"postcode": "2000",
+		"region": "New South Wales",
+		"country": "AU",
+		"wcState": "NSW"
+	}
+}
