@@ -21,6 +21,11 @@ export interface DropdownOptions {
 	 * Default "new-password".
 	 */
 	autocompleteAttribute?: string | null;
+	/**
+	 * Google attribution shown under the suggestions. Google requires its logo wherever Places
+	 * results appear without a Google map. Without a logo URL, the text "Google" is used.
+	 */
+	attribution?: { label: string; logoUrl?: string };
 }
 
 let instances = 0;
@@ -47,6 +52,8 @@ function visualViewportOffset(): { x: number; y: number } {
 }
 
 export class SuggestionDropdown {
+	/** Positioned wrapper holding the list and the Google attribution. */
+	readonly container: HTMLDivElement;
 	readonly list: HTMLUListElement;
 
 	private suggestions: Suggestion[] = [];
@@ -76,12 +83,17 @@ export class SuggestionDropdown {
 	) {
 		const id = `adra-aa-suggestions-${++instances}`;
 
+		this.container = document.createElement('div');
+		this.container.className = 'adra-aa-suggestions';
+		this.container.hidden = true;
+
 		this.list = document.createElement('ul');
 		this.list.id = id;
-		this.list.className = 'adra-aa-suggestions';
+		this.list.className = 'adra-aa-suggestions__list';
 		this.list.setAttribute('role', 'listbox');
-		this.list.hidden = true;
-		document.body.appendChild(this.list);
+
+		this.container.append(this.list, this.attribution());
+		document.body.appendChild(this.container);
 
 		this.setInputAttribute('role', 'combobox');
 		this.setInputAttribute('aria-autocomplete', 'list');
@@ -111,7 +123,7 @@ export class SuggestionDropdown {
 		this.listen(document, 'mousedown', (event) => {
 			const target = event.target as Node;
 
-			if (target !== input && !this.list.contains(target)) {
+			if (target !== input && !this.container.contains(target)) {
 				this.hide();
 			}
 		});
@@ -140,7 +152,7 @@ export class SuggestionDropdown {
 		this.requestId++;
 		this.cleanups.forEach((cleanup) => cleanup());
 		this.cleanups.length = 0;
-		this.list.remove();
+		this.container.remove();
 
 		this.originalAttributes.forEach((value, name) => {
 			if (value === null) {
@@ -154,7 +166,31 @@ export class SuggestionDropdown {
 	}
 
 	isOpen(): boolean {
-		return !this.list.hidden;
+		return !this.container.hidden;
+	}
+
+	private attribution(): HTMLElement {
+		const { label, logoUrl } = this.options.attribution ?? {
+			label: 'Powered by',
+		};
+		const footer = document.createElement('div');
+
+		footer.className = 'adra-aa-suggestions__attribution';
+		footer.append(`${label} `);
+
+		if (logoUrl) {
+			const logo = document.createElement('img');
+
+			logo.src = logoUrl;
+			logo.alt = 'Google';
+			logo.width = 45;
+			logo.height = 15;
+			footer.append(logo);
+		} else {
+			footer.append('Google');
+		}
+
+		return footer;
 	}
 
 	private setInputAttribute(name: string, value: string): void {
@@ -255,13 +291,13 @@ export class SuggestionDropdown {
 			this.list.appendChild(item);
 		});
 
-		this.list.hidden = false;
+		this.container.hidden = false;
 		this.input.setAttribute('aria-expanded', 'true');
 		this.position();
 	}
 
 	private hide(): void {
-		this.list.hidden = true;
+		this.container.hidden = true;
 		this.activeIndex = -1;
 		this.input.setAttribute('aria-expanded', 'false');
 		this.input.removeAttribute('aria-activedescendant');
@@ -349,8 +385,8 @@ export class SuggestionDropdown {
 		const rect = this.input.getBoundingClientRect();
 		const offset = visualViewportOffset();
 
-		this.list.style.top = `${rect.bottom + offset.y}px`;
-		this.list.style.left = `${rect.left + offset.x}px`;
-		this.list.style.width = `${rect.width}px`;
+		this.container.style.top = `${rect.bottom + offset.y}px`;
+		this.container.style.left = `${rect.left + offset.x}px`;
+		this.container.style.width = `${rect.width}px`;
 	}
 }

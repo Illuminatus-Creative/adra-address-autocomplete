@@ -1,7 +1,7 @@
 {
-	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
 	"place": {
-		"id": "hand-written-ca-toronto",
+		"id": "ChIJo4QiitY0K4gRUR56gCqdkTQ",
 		"formattedAddress": "290 Bremner Blvd, Toronto, ON M5V 3L9, Canada",
 		"adrFormatAddress": "<span class=\"street-address\">290 Bremner Blvd</span>, <span class=\"locality\">Toronto</span>, <span class=\"region\">ON</span> <span class=\"postal-code\">M5V 3L9</span>, <span class=\"country-name\">Canada</span>",
 		"addressComponents": [
@@ -20,10 +20,27 @@
 				]
 			},
 			{
+				"longText": "Old Toronto",
+				"shortText": "Old Toronto",
+				"types": [
+					"sublocality_level_1",
+					"sublocality",
+					"political"
+				]
+			},
+			{
 				"longText": "Toronto",
 				"shortText": "Toronto",
 				"types": [
 					"locality",
+					"political"
+				]
+			},
+			{
+				"longText": "Toronto",
+				"shortText": "Toronto",
+				"types": [
+					"administrative_area_level_3",
 					"political"
 				]
 			},
@@ -60,8 +77,8 @@
 			}
 		],
 		"location": {
-			"lat": 43.6426,
-			"lng": -79.3871
+			"lat": 43.642552099999996,
+			"lng": -79.3870943
 		}
 	},
 	"expected": {

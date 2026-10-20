@@ -29,7 +29,9 @@ PHP classes live in `src/` under the `Adra\AddressAutocomplete` namespace and ar
 
 ## Credits
 
-The autocomplete engine is being ported from GP Address Autocomplete by Gravity Wiz, which is licensed under the GPL.
+The autocomplete engine is ported from GP Address Autocomplete by Gravity Wiz, which is licensed under the GPL.
+
+`assets/images/google.svg` is Google's logo, shown under address suggestions as Google's Places API policies require (the same file WooCommerce ships for its Google provider). It is a Google trademark.
 
 ## License
 

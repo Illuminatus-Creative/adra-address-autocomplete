@@ -111,10 +111,10 @@ describe('Gravity Forms adapter', () => {
 
 		expect([1, 2, 3, 4, 5, 6].map(value)).toEqual([
 			'1600 Amphitheatre Pkwy',
-			'',
+			'Google Building 41',
 			'Mountain View',
 			'California',
-			'94043',
+			'94043-1351',
 			'US',
 		]);
 		expect(changed).toEqual(
@@ -130,13 +130,13 @@ describe('Gravity Forms adapter', () => {
 		);
 
 		expect(selected).toEqual({
-			placeId: 'hand-written-us-mountain-view',
+			placeId: 'ChIJiSSC8QK6j4AR98Thup8mqTc',
 			address: {
 				address_1: '1600 Amphitheatre Pkwy',
-				address_2: '',
+				address_2: 'Google Building 41',
 				city: 'Mountain View',
 				state: 'California',
-				postcode: '94043',
+				postcode: '94043-1351',
 				country: 'US',
 			},
 		});

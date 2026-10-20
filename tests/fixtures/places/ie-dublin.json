@@ -1,10 +1,17 @@
 {
-	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
 	"place": {
-		"id": "hand-written-ie-dublin",
-		"formattedAddress": "College Green, Dublin 2, D02 PN40, Ireland",
-		"adrFormatAddress": "<span class=\"street-address\">College Green</span>, <span class=\"locality\">Dublin 2</span>, <span class=\"region\">Co. Dublin</span>, <span class=\"postal-code\">D02 PN40</span>, <span class=\"country-name\">Ireland</span>",
+		"id": "ChIJJeQJT5sOZ0gRts9rc01RUjM",
+		"formattedAddress": "2 College Green, Temple Bar, Dublin, D02 VR66, Ireland",
+		"adrFormatAddress": "<span class=\"street-address\">2 College Green</span>, <span class=\"extended-address\">Temple Bar</span>, <span class=\"locality\">Dublin</span>, <span class=\"postal-code\">D02 VR66</span>, <span class=\"country-name\">Ireland</span>",
 		"addressComponents": [
+			{
+				"longText": "2",
+				"shortText": "2",
+				"types": [
+					"street_number"
+				]
+			},
 			{
 				"longText": "College Green",
 				"shortText": "College Green",
@@ -13,8 +20,16 @@
 				]
 			},
 			{
-				"longText": "Dublin 2",
-				"shortText": "Dublin 2",
+				"longText": "Temple Bar",
+				"shortText": "Temple Bar",
+				"types": [
+					"neighborhood",
+					"political"
+				]
+			},
+			{
+				"longText": "Dublin",
+				"shortText": "Dublin",
 				"types": [
 					"locality",
 					"political"
@@ -22,7 +37,7 @@
 			},
 			{
 				"longText": "County Dublin",
-				"shortText": "County Dublin",
+				"shortText": "D",
 				"types": [
 					"administrative_area_level_1",
 					"political"
@@ -37,24 +52,24 @@
 				]
 			},
 			{
-				"longText": "D02 PN40",
-				"shortText": "D02 PN40",
+				"longText": "D02 VR66",
+				"shortText": "D02 VR66",
 				"types": [
 					"postal_code"
 				]
 			}
 		],
 		"location": {
-			"lat": 53.3438,
-			"lng": -6.2546
+			"lat": 53.3444923,
+			"lng": -6.2611326
 		}
 	},
 	"expected": {
-		"address_1": "College Green",
-		"address_2": "",
-		"city": "Dublin 2",
-		"postcode": "D02 PN40",
-		"region": "Co. Dublin",
+		"address_1": "2 College Green",
+		"address_2": "Temple Bar",
+		"city": "Dublin",
+		"postcode": "D02 VR66",
+		"region": "County Dublin",
 		"country": "IE",
 		"wcState": "D"
 	}

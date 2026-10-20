@@ -1,9 +1,9 @@
 {
-	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
 	"place": {
-		"id": "hand-written-es-barcelona",
-		"formattedAddress": "C/ de Mallorca, 401, L'Eixample, 08013 Barcelona, Spain",
-		"adrFormatAddress": "<span class=\"street-address\">C/ de Mallorca, 401</span>, <span class=\"extended-address\">L&#39;Eixample</span>, <span class=\"postal-code\">08013</span> <span class=\"locality\">Barcelona</span>, <span class=\"country-name\">Spain</span>",
+		"id": "ChIJ0XnT1MKipBIRVdDC8KJ5MN4",
+		"formattedAddress": "Carrer de Mallorca, 401, Eixample, 08013 Barcelona, Spain",
+		"adrFormatAddress": "<span class=\"street-address\">Carrer de Mallorca, 401</span>, <span class=\"extended-address\">Eixample</span>, <span class=\"postal-code\">08013</span> <span class=\"locality\">Barcelona</span>, <span class=\"country-name\">Spain</span>",
 		"addressComponents": [
 			{
 				"longText": "401",
@@ -14,14 +14,14 @@
 			},
 			{
 				"longText": "Carrer de Mallorca",
-				"shortText": "C/ de Mallorca",
+				"shortText": "Carrer de Mallorca",
 				"types": [
 					"route"
 				]
 			},
 			{
-				"longText": "L'Eixample",
-				"shortText": "L'Eixample",
+				"longText": "Eixample",
+				"shortText": "Eixample",
 				"types": [
 					"sublocality_level_1",
 					"sublocality",
@@ -69,13 +69,13 @@
 			}
 		],
 		"location": {
-			"lat": 41.4036,
-			"lng": 2.1744
+			"lat": 41.403633400000004,
+			"lng": 2.1743547999999997
 		}
 	},
 	"expected": {
-		"address_1": "C/ de Mallorca, 401",
-		"address_2": "L'Eixample",
+		"address_1": "Carrer de Mallorca, 401",
+		"address_2": "Eixample",
 		"city": "Barcelona",
 		"postcode": "08013",
 		"region": "",

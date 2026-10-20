@@ -12,6 +12,7 @@ use Adra\AddressAutocomplete\Assets\Google_Loader;
 use Adra\AddressAutocomplete\Gravity_Forms\Integration as Gravity_Forms_Integration;
 use Adra\AddressAutocomplete\Settings\Options;
 use Adra\AddressAutocomplete\Settings\Settings_Page;
+use Adra\AddressAutocomplete\WooCommerce\Integration as WooCommerce_Integration;
 
 /**
  * Wires up the parts of the plugin the current site supports.
@@ -50,6 +51,10 @@ final class Plugin {
 
 		if ( $this->requirements->gravity_forms_supported() ) {
 			( new Gravity_Forms_Integration( $loader ) )->register();
+		}
+
+		if ( $this->requirements->woocommerce_supported() ) {
+			( new WooCommerce_Integration( $loader ) )->register();
 		}
 	}
 

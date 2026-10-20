@@ -3,7 +3,7 @@
  * with the form-specific parts (writing inputs, matching select options) moved to the adapters.
  */
 
-import { parseAdrFormatAddress } from './adr';
+import { decodeEntities, parseAdrFormatAddress } from './adr';
 import type {
 	AddressComponent,
 	ParsedPlace,
@@ -16,7 +16,7 @@ import type {
  * one. Applied only to these countries because elsewhere it gives odd results (for London
  * or Berlin, for example).
  */
-const REGION_FROM_LEVEL_1 = ['NL', 'NZ', 'FR'];
+const REGION_FROM_LEVEL_1 = ['NL', 'NZ', 'FR', 'IE'];
 
 /* As above, for England, where the second level is the county. */
 const REGION_FROM_LEVEL_2 = ['GB'];
@@ -73,11 +73,24 @@ function regionText(
 ): string {
 	if (adrRegion) {
 		// adrFormatAddress often abbreviates the region ("CA"); prefer the full name.
-		const abbreviated = candidates.find(
-			(candidate) => candidate.shortText === adrRegion
+		const known = candidates.find(
+			(candidate) =>
+				candidate.shortText === adrRegion ||
+				candidate.longText === adrRegion
 		);
 
-		return abbreviated ? abbreviated.longText : adrRegion;
+		if (known) {
+			return known.longText;
+		}
+
+		/*
+		 * Google sometimes marks a district as the region (Munich's "Altstadt-Lehel"). When it
+		 * isn't an administrative area, the first-level area is the better state.
+		 */
+		return (
+			candidates.find((candidate) => candidate.level === 1)?.longText ??
+			adrRegion
+		);
 	}
 
 	let fallbackLevel: 1 | 2 | null = null;
@@ -92,6 +105,22 @@ function regionText(
 		candidates.find((candidate) => candidate.level === fallbackLevel)
 			?.longText ?? ''
 	);
+}
+
+/*
+ * For landmarks, adrFormatAddress can leave the street outside the street-address element
+ * ("Bennelong Point, <span class="locality">Sydney</span> …"). Falls back to that leading
+ * text, then to the route.
+ */
+function streetFallback(
+	adrFormatAddress: string,
+	components: AddressComponent[]
+): string {
+	const leading = decodeEntities(adrFormatAddress.split('<')[0] ?? '')
+		.replace(/[\s,]+$/, '')
+		.trim();
+
+	return leading || findComponent(components, 'route')?.longText || '';
 }
 
 /**
@@ -110,7 +139,9 @@ export function parsePlace(place: PlaceData): ParsedPlace {
 		placeId: place.id,
 		formattedAddress: place.formattedAddress,
 		location: place.location,
-		address_1: adr['street-address'] ?? '',
+		address_1:
+			adr['street-address'] ??
+			streetFallback(place.adrFormatAddress, components),
 		address_2: adr['extended-address'] ?? '',
 		// Singapore addresses have no locality in adrFormatAddress.
 		city:

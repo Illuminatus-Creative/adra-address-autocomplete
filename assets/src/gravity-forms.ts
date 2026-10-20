@@ -16,12 +16,20 @@ import { PlacesClient } from './engine/places-client';
 
 declare global {
 	interface Window {
+		adraAaGravityFormsSettings?: {
+			poweredBy: string;
+			googleLogoUrl: string;
+		};
 		adraAaGravityForms?:
 			FieldConfig[] | { push: (config: FieldConfig) => void };
 	}
 }
 
-const adapter = createGravityFormsAdapter(new PlacesClient(loadPlacesApi));
+const settings = window.adraAaGravityFormsSettings;
+const adapter = createGravityFormsAdapter(
+	new PlacesClient(loadPlacesApi),
+	settings && { label: settings.poweredBy, logoUrl: settings.googleLogoUrl }
+);
 const queued = Array.isArray(window.adraAaGravityForms)
 	? window.adraAaGravityForms
 	: [];

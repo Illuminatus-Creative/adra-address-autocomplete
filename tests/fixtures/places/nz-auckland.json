@@ -1,13 +1,13 @@
 {
-	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
 	"place": {
-		"id": "hand-written-nz-auckland",
-		"formattedAddress": "Victoria Street West, Auckland CBD, Auckland 1010, New Zealand",
-		"adrFormatAddress": "<span class=\"street-address\">Victoria Street West</span>, <span class=\"extended-address\">Auckland CBD</span>, <span class=\"locality\">Auckland</span> <span class=\"postal-code\">1010</span>, <span class=\"country-name\">New Zealand</span>",
+		"id": "EjlWaWN0b3JpYSBTdHJlZXQgV2VzdCwgQXVja2xhbmQgQ0JELCBBdWNrbGFuZCwgTmV3IFplYWxhbmQiLiosChQKEgktVpXy8UcNbREwLkpcV4zMshIUChIJuZqpSPtHDW0R4LOiQ2HvAAU",
+		"formattedAddress": "Victoria Street West, Auckland CBD, Auckland, New Zealand",
+		"adrFormatAddress": "<span class=\"street-address\">Victoria Street West</span>, <span class=\"extended-address\">Auckland CBD</span>, <span class=\"locality\">Auckland</span>, <span class=\"country-name\">New Zealand</span>",
 		"addressComponents": [
 			{
 				"longText": "Victoria Street West",
-				"shortText": "Victoria Street West",
+				"shortText": "Victoria St W",
 				"types": [
 					"route"
 				]
@@ -44,25 +44,18 @@
 					"country",
 					"political"
 				]
-			},
-			{
-				"longText": "1010",
-				"shortText": "1010",
-				"types": [
-					"postal_code"
-				]
 			}
 		],
 		"location": {
-			"lat": -36.8485,
-			"lng": 174.7622
+			"lat": -36.8481007,
+			"lng": 174.7572371
 		}
 	},
 	"expected": {
 		"address_1": "Victoria Street West",
 		"address_2": "Auckland CBD",
 		"city": "Auckland",
-		"postcode": "1010",
+		"postcode": "",
 		"region": "Auckland",
 		"country": "NZ",
 		"wcState": "AUK"

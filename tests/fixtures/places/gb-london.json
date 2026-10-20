@@ -1,9 +1,9 @@
 {
-	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
 	"place": {
-		"id": "hand-written-gb-london",
+		"id": "ChIJx2E7b8UEdkgRtw6rLyLUl5w",
 		"formattedAddress": "10 Downing St, London SW1A 2AA, UK",
-		"adrFormatAddress": "<span class=\"street-address\">10 Downing St</span>, <span class=\"locality\">London</span> <span class=\"postal-code\">SW1A 2AA</span>, <span class=\"country-name\">UK</span>",
+		"adrFormatAddress": "<span class=\"street-address\">10 Downing Street</span>, <span class=\"locality\">London</span> <span class=\"postal-code\">SW1A 2AA</span>, <span class=\"country-name\">UK</span>",
 		"addressComponents": [
 			{
 				"longText": "10",
@@ -59,12 +59,12 @@
 			}
 		],
 		"location": {
-			"lat": 51.5034,
-			"lng": -0.1276
+			"lat": 51.503339499999996,
+			"lng": -0.1275662
 		}
 	},
 	"expected": {
-		"address_1": "10 Downing St",
+		"address_1": "10 Downing Street",
 		"address_2": "",
 		"city": "London",
 		"postcode": "SW1A 2AA",

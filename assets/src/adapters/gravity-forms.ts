@@ -9,6 +9,7 @@ import { parsePlace } from '../engine/parse-place';
 import type { PlacesClient } from '../engine/places-client';
 import type { Option, ParsedPlace } from '../engine/types';
 import { SuggestionDropdown } from '../ui/dropdown';
+import type { DropdownOptions } from '../ui/dropdown';
 
 export interface FieldConfig {
 	formId: number;
@@ -55,7 +56,10 @@ function setValue(element: FieldElement | null, value: string): void {
 	element.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
-export function createGravityFormsAdapter(client: Client) {
+export function createGravityFormsAdapter(
+	client: Client,
+	attribution?: DropdownOptions['attribution']
+) {
 	const attached = new Map<
 		string,
 		{ input: HTMLInputElement; dropdown: SuggestionDropdown }
@@ -168,6 +172,7 @@ export function createGravityFormsAdapter(client: Client) {
 			search: (query) =>
 				client.search(query, { regionCodes: config.regionCodes ?? [] }),
 			onSelect: (suggestion) => fill(config, suggestion.id),
+			attribution,
 		});
 
 		if (dropdown) {

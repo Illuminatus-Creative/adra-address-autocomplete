@@ -18,10 +18,11 @@ final class Bundle {
 	/**
 	 * Registers a built script, and its stylesheet if it has one.
 	 *
-	 * @param string $name Entry name, e.g. "admin-settings".
+	 * @param string   $name                Entry name, e.g. "admin-settings".
+	 * @param string[] $extra_dependencies  Script handles to load first, beyond the ones webpack found.
 	 * @return string|null Script handle, or null when the bundle hasn't been built.
 	 */
-	public static function register( string $name ): ?string {
+	public static function register( string $name, array $extra_dependencies = array() ): ?string {
 		$path       = plugin_dir_path( ADRA_AA_FILE ) . 'assets/build/';
 		$asset_file = $path . $name . '.asset.php';
 
@@ -35,7 +36,7 @@ final class Bundle {
 		wp_register_script(
 			$handle,
 			plugins_url( 'assets/build/' . $name . '.js', ADRA_AA_FILE ),
-			$asset['dependencies'] ?? array(),
+			array_merge( $asset['dependencies'] ?? array(), $extra_dependencies ),
 			$asset['version'] ?? ADRA_AA_VERSION,
 			array( 'in_footer' => true )
 		);

@@ -1,9 +1,9 @@
 {
-	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
 	"place": {
-		"id": "hand-written-it-rome",
-		"formattedAddress": "Piazza del Colosseo, 1, 00184 Roma RM, Italy",
-		"adrFormatAddress": "<span class=\"street-address\">Piazza del Colosseo, 1</span>, <span class=\"postal-code\">00184</span> <span class=\"locality\">Roma</span> <span class=\"region\">RM</span>, <span class=\"country-name\">Italy</span>",
+		"id": "ChIJO6r6c7dhLxMRHnqX61cWOrc",
+		"formattedAddress": "P.za del Colosseo, 1, 00184 Roma RM, Italy",
+		"adrFormatAddress": "<span class=\"street-address\">P.za del Colosseo, 1</span>, <span class=\"postal-code\">00184</span> <span class=\"locality\">Roma</span> <span class=\"region\">RM</span>, <span class=\"country-name\">Italy</span>",
 		"addressComponents": [
 			{
 				"longText": "1",
@@ -14,7 +14,7 @@
 			},
 			{
 				"longText": "Piazza del Colosseo",
-				"shortText": "Piazza del Colosseo",
+				"shortText": "P.za del Colosseo",
 				"types": [
 					"route"
 				]
@@ -36,7 +36,7 @@
 				]
 			},
 			{
-				"longText": "Città Metropolitana di Roma Capitale",
+				"longText": "Città metropolitana di Roma Capitale",
 				"shortText": "RM",
 				"types": [
 					"administrative_area_level_2",
@@ -68,16 +68,16 @@
 			}
 		],
 		"location": {
-			"lat": 41.8902,
-			"lng": 12.4922
+			"lat": 41.8899689,
+			"lng": 12.4942703
 		}
 	},
 	"expected": {
-		"address_1": "Piazza del Colosseo, 1",
+		"address_1": "P.za del Colosseo, 1",
 		"address_2": "",
 		"city": "Roma",
 		"postcode": "00184",
-		"region": "Città Metropolitana di Roma Capitale",
+		"region": "Città metropolitana di Roma Capitale",
 		"country": "IT",
 		"wcState": "RM"
 	}

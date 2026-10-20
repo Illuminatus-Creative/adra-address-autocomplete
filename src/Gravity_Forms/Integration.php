@@ -155,6 +155,15 @@ final class Integration {
 		}
 
 		wp_enqueue_script( $handle );
+		wp_localize_script(
+			$handle,
+			'adraAaGravityFormsSettings',
+			array(
+				/* translators: Followed by the Google logo, under address suggestions. */
+				'poweredBy'     => __( 'Powered by', 'adra-address-autocomplete' ),
+				'googleLogoUrl' => plugins_url( 'assets/images/google.svg', ADRA_AA_FILE ),
+			)
+		);
 
 		if ( wp_style_is( $handle, 'registered' ) ) {
 			wp_enqueue_style( $handle );

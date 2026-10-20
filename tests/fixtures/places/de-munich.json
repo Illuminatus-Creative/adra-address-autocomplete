@@ -1,9 +1,9 @@
 {
-	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
 	"place": {
-		"id": "hand-written-de-munich",
-		"formattedAddress": "Marienplatz 1, 80331 München, Germany",
-		"adrFormatAddress": "<span class=\"street-address\">Marienplatz 1</span>, <span class=\"postal-code\">80331</span> <span class=\"locality\">München</span>, <span class=\"country-name\">Germany</span>",
+		"id": "ChIJh1XS1fR1nkcRM7A6ayJH48Q",
+		"formattedAddress": "Marienplatz 1, 80331 München-Altstadt-Lehel, Germany",
+		"adrFormatAddress": "<span class=\"street-address\">Marienplatz 1</span>, <span class=\"postal-code\">80331</span> <span class=\"locality\">München</span>-<span class=\"region\">Altstadt-Lehel</span>, <span class=\"country-name\">Germany</span>",
 		"addressComponents": [
 			{
 				"longText": "1",
@@ -20,10 +20,27 @@
 				]
 			},
 			{
+				"longText": "Altstadt-Lehel",
+				"shortText": "Altstadt-Lehel",
+				"types": [
+					"sublocality_level_1",
+					"sublocality",
+					"political"
+				]
+			},
+			{
 				"longText": "München",
 				"shortText": "München",
 				"types": [
 					"locality",
+					"political"
+				]
+			},
+			{
+				"longText": "Kreisfreie Stadt München",
+				"shortText": "Kreisfreie Stadt München",
+				"types": [
+					"administrative_area_level_3",
 					"political"
 				]
 			},
@@ -60,8 +77,8 @@
 			}
 		],
 		"location": {
-			"lat": 48.1374,
-			"lng": 11.5755
+			"lat": 48.1374259,
+			"lng": 11.574717099999999
 		}
 	},
 	"expected": {
@@ -69,7 +86,7 @@
 		"address_2": "",
 		"city": "München",
 		"postcode": "80331",
-		"region": "",
+		"region": "Bayern",
 		"country": "DE",
 		"wcState": "DE-BY"
 	}

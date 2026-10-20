@@ -60,14 +60,24 @@ export function normalizePostcode(value: string): string {
 }
 
 /*
- * Google returns 5-digit US ZIP codes, so adding the +4 extension isn't an edit. Keyed on the
- * postcode's shape, not the country, because forms store the country as a code or a name.
+ * Adding or removing a US ZIP+4 extension isn't an edit (Google returns either form); changing
+ * it is. Keyed on
+ * the postcode's shape, not the country, because forms store the country as a code or a name.
  */
 function postcodesMatch(selected: string, submitted: string): boolean {
 	const a = normalizePostcode(selected);
 	const b = normalizePostcode(submitted);
+	const zip = /^(\d{5})(\d{4})?$/;
+	const zipA = zip.exec(a);
+	const zipB = zip.exec(b);
 
-	return a === b || (/^\d{5}$/.test(a) && new RegExp(`^${a}\\d{4}$`).test(b));
+	return (
+		a === b ||
+		(!!zipA &&
+			!!zipB &&
+			zipA[1] === zipB[1] &&
+			(!zipA[2] || !zipB[2] || zipA[2] === zipB[2]))
+	);
 }
 
 /**

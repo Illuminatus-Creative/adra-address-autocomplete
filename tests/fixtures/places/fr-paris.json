@@ -1,7 +1,7 @@
 {
-	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
 	"place": {
-		"id": "hand-written-fr-paris",
+		"id": "ChIJ4QEl5uFv5kcR02MTNOjmEEA",
 		"formattedAddress": "Av. Gustave Eiffel, 75007 Paris, France",
 		"adrFormatAddress": "<span class=\"street-address\">Av. Gustave Eiffel</span>, <span class=\"postal-code\">75007</span> <span class=\"locality\">Paris</span>, <span class=\"country-name\">France</span>",
 		"addressComponents": [
@@ -21,8 +21,8 @@
 				]
 			},
 			{
-				"longText": "Département de Paris",
-				"shortText": "Département de Paris",
+				"longText": "Paris",
+				"shortText": "Paris",
 				"types": [
 					"administrative_area_level_2",
 					"political"
@@ -53,8 +53,8 @@
 			}
 		],
 		"location": {
-			"lat": 48.8584,
-			"lng": 2.2945
+			"lat": 48.8578065,
+			"lng": 2.295188
 		}
 	},
 	"expected": {

@@ -1,10 +1,17 @@
 {
-	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
 	"place": {
-		"id": "hand-written-jp-tokyo",
-		"formattedAddress": "4 Chome-2-8 Shibakoen, Minato City, Tokyo 105-0011, Japan",
-		"adrFormatAddress": "<span class=\"street-address\">4 Chome-2-8 Shibakoen</span>, <span class=\"locality\">Minato City</span>, <span class=\"region\">Tokyo</span> <span class=\"postal-code\">105-0011</span>, <span class=\"country-name\">Japan</span>",
+		"id": "ChIJcx2EkL2LGGARv0gV3HSFqQo",
+		"formattedAddress": "Tokyo Tower, 4-chōme-2-8 Shibakōen, Minato City, Tokyo 105-0011, Japan",
+		"adrFormatAddress": "<span class=\"street-address\">Tokyo Tower, 4-chōme-2-8 Shibakōen, Minato City</span>, <span class=\"region\">Tokyo</span> <span class=\"postal-code\">105-0011</span>, <span class=\"country-name\">Japan</span>",
 		"addressComponents": [
+			{
+				"longText": "Tokyo Tower",
+				"shortText": "Tokyo Tower",
+				"types": [
+					"premise"
+				]
+			},
 			{
 				"longText": "8",
 				"shortText": "8",
@@ -22,8 +29,8 @@
 				]
 			},
 			{
-				"longText": "4 Chome",
-				"shortText": "4 Chome",
+				"longText": "4-chōme",
+				"shortText": "4-chōme",
 				"types": [
 					"sublocality_level_3",
 					"sublocality",
@@ -31,8 +38,8 @@
 				]
 			},
 			{
-				"longText": "Shibakoen",
-				"shortText": "Shibakoen",
+				"longText": "Shibakōen",
+				"shortText": "Shibakōen",
 				"types": [
 					"sublocality_level_2",
 					"sublocality",
@@ -72,12 +79,12 @@
 			}
 		],
 		"location": {
-			"lat": 35.6586,
-			"lng": 139.7454
+			"lat": 35.6585469,
+			"lng": 139.7456622
 		}
 	},
 	"expected": {
-		"address_1": "4 Chome-2-8 Shibakoen",
+		"address_1": "Tokyo Tower, 4-chōme-2-8 Shibakōen, Minato City",
 		"address_2": "",
 		"city": "Minato City",
 		"postcode": "105-0011",

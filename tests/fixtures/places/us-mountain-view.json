@@ -1,10 +1,17 @@
 {
-	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
 	"place": {
-		"id": "hand-written-us-mountain-view",
-		"formattedAddress": "1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA",
-		"adrFormatAddress": "<span class=\"street-address\">1600 Amphitheatre Pkwy</span>, <span class=\"locality\">Mountain View</span>, <span class=\"region\">CA</span> <span class=\"postal-code\">94043</span>, <span class=\"country-name\">USA</span>",
+		"id": "ChIJiSSC8QK6j4AR98Thup8mqTc",
+		"formattedAddress": "Google Building 41, 1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA",
+		"adrFormatAddress": "<span class=\"extended-address\">Google Building 41</span>, <span class=\"street-address\">1600 Amphitheatre Pkwy</span>, <span class=\"locality\">Mountain View</span>, <span class=\"region\">CA</span> <span class=\"postal-code\">94043-1351</span>, <span class=\"country-name\">USA</span>",
 		"addressComponents": [
+			{
+				"longText": "Google Building 41",
+				"shortText": "Google Building 41",
+				"types": [
+					"premise"
+				]
+			},
 			{
 				"longText": "1600",
 				"shortText": "1600",
@@ -57,18 +64,25 @@
 				"types": [
 					"postal_code"
 				]
+			},
+			{
+				"longText": "1351",
+				"shortText": "1351",
+				"types": [
+					"postal_code_suffix"
+				]
 			}
 		],
 		"location": {
-			"lat": 37.422,
-			"lng": -122.0841
+			"lat": 37.4224864,
+			"lng": -122.0855962
 		}
 	},
 	"expected": {
 		"address_1": "1600 Amphitheatre Pkwy",
-		"address_2": "",
+		"address_2": "Google Building 41",
 		"city": "Mountain View",
-		"postcode": "94043",
+		"postcode": "94043-1351",
 		"region": "California",
 		"country": "US",
 		"wcState": "CA"

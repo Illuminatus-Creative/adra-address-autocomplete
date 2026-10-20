@@ -10,7 +10,6 @@
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
-	list-style: none;
 	background: #fff;
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	border-top: none;
@@ -23,6 +22,29 @@
 
 .adra-aa-suggestions[hidden] {
 	display: none;
+}
+
+.adra-aa-suggestions__list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.adra-aa-suggestions__attribution {
+	padding: 4px 6px;
+	text-align: right;
+	font-size: 11px;
+	line-height: 15px;
+	color: #70757a;
+	border-top: 1px solid #e6e6e6;
+}
+
+.adra-aa-suggestions__attribution img {
+	display: inline-block;
+	height: 15px;
+	width: 45px;
+	margin-bottom: -3px;
+	vertical-align: baseline;
 }
 
 .adra-aa-suggestion {

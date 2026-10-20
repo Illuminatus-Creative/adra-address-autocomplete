@@ -1,7 +1,7 @@
 {
-	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
 	"place": {
-		"id": "hand-written-nl-amsterdam",
+		"id": "ChIJ5Ra7we4JxkcR3XQ7J4u5EuI",
 		"formattedAddress": "Museumstraat 1, 1071 XX Amsterdam, Netherlands",
 		"adrFormatAddress": "<span class=\"street-address\">Museumstraat 1</span>, <span class=\"postal-code\">1071 XX</span> <span class=\"locality\">Amsterdam</span>, <span class=\"country-name\">Netherlands</span>",
 		"addressComponents": [
@@ -17,6 +17,15 @@
 				"shortText": "Museumstraat",
 				"types": [
 					"route"
+				]
+			},
+			{
+				"longText": "Amsterdam-Zuid",
+				"shortText": "Amsterdam-Zuid",
+				"types": [
+					"sublocality_level_1",
+					"sublocality",
+					"political"
 				]
 			},
 			{
@@ -60,8 +69,8 @@
 			}
 		],
 		"location": {
-			"lat": 52.36,
-			"lng": 4.8852
+			"lat": 52.3599976,
+			"lng": 4.8852188
 		}
 	},
 	"expected": {

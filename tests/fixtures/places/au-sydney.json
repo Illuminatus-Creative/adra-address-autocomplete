@@ -1,15 +1,16 @@
 {
-	"_source": "HAND-WRITTEN in the Places API (New) format, not recorded from Google. Replace with: node bin/record-place-fixture.mjs <placeId> <name>",
+	"_source": "Recorded from the Places API (New) on 2026-10-20 with languageCode=en.",
 	"place": {
-		"id": "hand-written-au-sydney",
+		"id": "ChIJ56_fi2auEmsRdpMMZhsxJew",
 		"formattedAddress": "Bennelong Point, Sydney NSW 2000, Australia",
-		"adrFormatAddress": "<span class=\"street-address\">Bennelong Point</span>, <span class=\"locality\">Sydney</span> <span class=\"region\">NSW</span> <span class=\"postal-code\">2000</span>, <span class=\"country-name\">Australia</span>",
+		"adrFormatAddress": "Bennelong Point, <span class=\"locality\">Sydney</span> <span class=\"region\">NSW</span> <span class=\"postal-code\">2000</span>, <span class=\"country-name\">Australia</span>",
 		"addressComponents": [
 			{
 				"longText": "Bennelong Point",
 				"shortText": "Bennelong Point",
 				"types": [
-					"route"
+					"natural_feature",
+					"establishment"
 				]
 			},
 			{
@@ -21,8 +22,8 @@
 				]
 			},
 			{
-				"longText": "Council of the City of Sydney",
-				"shortText": "Sydney",
+				"longText": "City of Sydney",
+				"shortText": "City of Sydney",
 				"types": [
 					"administrative_area_level_2",
 					"political"
@@ -53,8 +54,8 @@
 			}
 		],
 		"location": {
-			"lat": -33.8568,
-			"lng": 151.2153
+			"lat": -33.8565361,
+			"lng": 151.2149964
 		}
 	},
 	"expected": {

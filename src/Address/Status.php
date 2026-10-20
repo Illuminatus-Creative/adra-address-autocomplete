@@ -97,7 +97,7 @@ final class Status {
 	}
 
 	/**
-	 * Compares postcodes. Google returns 5-digit US ZIP codes, so adding the +4 extension isn't an edit.
+	 * Compares postcodes. Adding or removing a US ZIP+4 extension isn't an edit (Google returns either form); changing it is.
 	 *
 	 * @param string $selected  Selected postcode.
 	 * @param string $submitted Submitted postcode.
@@ -110,7 +110,12 @@ final class Status {
 			return true;
 		}
 
-		return 1 === preg_match( '/^\d{5}$/', $selected ) && 1 === preg_match( '/^' . $selected . '\d{4}$/', $submitted );
+		$zip = '/^(\d{5})(\d{4})?$/';
+
+		return 1 === preg_match( $zip, $selected, $zip_selected )
+			&& 1 === preg_match( $zip, $submitted, $zip_submitted )
+			&& $zip_selected[1] === $zip_submitted[1]
+			&& ( empty( $zip_selected[2] ) || empty( $zip_submitted[2] ) );
 	}
 
 	/**

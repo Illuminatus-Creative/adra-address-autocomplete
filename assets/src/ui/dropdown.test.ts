@@ -248,3 +248,35 @@ describe('SuggestionDropdown', () => {
 		expect(options.search).toHaveBeenCalledOnce();
 	});
 });
+
+describe('SuggestionDropdown attribution', () => {
+	beforeEach(() => {
+		vi.useFakeTimers();
+		input = document.createElement('input');
+		document.body.appendChild(input);
+	});
+
+	it('shows the Google logo under the suggestions, outside the listbox', async () => {
+		setup({ attribution: { label: 'Powered by', logoUrl: '/google.svg' } });
+		await type('main');
+
+		const footer = dropdown!.container.querySelector(
+			'.adra-aa-suggestions__attribution'
+		)!;
+
+		expect(footer.textContent).toContain('Powered by');
+		expect(footer.querySelector('img')!.getAttribute('alt')).toBe('Google');
+		expect(dropdown!.list.contains(footer)).toBe(false);
+		expect(items()).toHaveLength(2);
+	});
+
+	it('falls back to text when no logo is given', () => {
+		setup();
+
+		expect(
+			dropdown!.container.querySelector(
+				'.adra-aa-suggestions__attribution'
+			)!.textContent
+		).toBe('Powered by Google');
+	});
+});
